@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "dOz5wa2AYu1KAyuAFfImua06gIcUoZfjdz7re2qL9dAjU6zkckdt0JJQFNZ6NF3z1HWovCEIiePnJxPSBI0IqQ==",
+  "success": true,
+  "projectFilePath": "D:\\breeze\\VSProject\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.15\\microsoft.netcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.15\\microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.15\\microsoft.netcore.app.host.win-x64.7.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}
