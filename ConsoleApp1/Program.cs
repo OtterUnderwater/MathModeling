@@ -355,7 +355,79 @@ namespace ВходнойКонтроль
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
-       
+        static void Metod4(int[,] Arr)
+        {
+            int N = Arr.GetLength(0);
+            int M = Arr.GetLength(1);
+            int[,] Plan = new int[N, M];
+            int[,] Check = new int[N, M];
+            int SumCheck = 0; // 0 - не заполнен тариф, 1 - заполнен тариф
+            //Скопировали массив, чтобы не изменять значения и добавляем + 1 колонку и строку для штрафов
+            int[,] Tariff = new int[N + 1, M + 1];            
+            for (int i = 0; i < Tariff.GetLength(0)-1; i++)
+            {
+                for (int j = 0; j < Tariff.GetLength(1)-1; j++)
+                {
+                    Tariff[i, j] = Arr[i, j];
+                }
+            }
+            //int[,] Fine = new int[N+1, M + 1];
+            //Fine = Tariff;
+            //Array.Resize(ref myArr, myArr.Length + 5);
+
+            //Подсчет тарифного плана
+            if (Closed(Tariff))
+            {
+                Console.WriteLine("Тарифы:");
+                for (int i = 0; i < Tariff.GetLength(0); i++)
+                {
+                    for (int j = 0; j < Tariff.GetLength(1); j++)
+                    {
+                        Console.Write(Tariff[i, j] + " \t");
+                    }
+                    Console.WriteLine();
+                }
+
+                //while (SumCheck < (N - 1) * (M - 1))
+                //{
+                //    //Заполняем ячейки тарифом
+                //    for (int j = 1; j < Tariff.GetLength(1); j++)
+                //    {
+                //        for (int i = 1; i < Tariff.GetLength(0); i++)
+                //        {
+                //            if (Check[i, j] == 0)
+                //            {
+                //                if (Tariff[0, j] >= Tariff[i, 0])
+                //                {
+                //                    Plan[i, j] = Tariff[i, 0];
+                //                    Tariff[0, j] -= Tariff[i, 0];
+                //                    Tariff[i, 0] -= Tariff[i, 0];
+                //                }
+                //                else if (Tariff[0, j] < Tariff[i, 0])
+                //                {
+                //                    Plan[i, j] = Tariff[0, j];
+                //                    Tariff[i, 0] -= Tariff[0, j];
+                //                    Tariff[0, j] -= Tariff[0, j];
+                //                }
+                //                Check[i, j] = 1;
+                //            }
+                //        }
+                //    }
+                //    SumCheck = 0;
+                //    //Проверка на количество заполненных элементов
+                //    for (int i = 1; i < Check.GetLength(0); i++)
+                //    {
+                //        for (int j = 1; j < Check.GetLength(1); j++)
+                //        {
+                //            SumCheck += Check[i, j];
+                //        }
+                //    }
+                //}
+
+                Print(Plan, Arr); //Вывод тарифного плана
+                OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
+            }
+        }
         static void Main()
         {
             int N, M; 
@@ -400,14 +472,14 @@ namespace ВходнойКонтроль
                 Console.WriteLine("1. Метод северно-западного угла.");
                 Console.WriteLine("2. Метод минимальной стоимости.");
                 Console.WriteLine("3. Метод двойного предпочтения.");
-                Console.WriteLine("4. Метод фппроксимации Фогеля.");
+                Console.WriteLine("4. Метод аппроксимации Фогеля.");
                 n = Convert.ToInt32(Console.ReadLine());
                 switch (n)
                 {
                     case 1: Metod1(Tariff); break;
                     case 2: Metod2(Tariff); break;
                     case 3: Metod3(Tariff); break;
-                    //case 4: Metod4(Tariff); break;
+                    case 4: Metod4(Tariff); break;
                     default: Console.WriteLine("Такого метода нет"); break;
                 }
                 Console.WriteLine("Вы хотите выбрать другой метод? (1 - да, 0 - нет).");
