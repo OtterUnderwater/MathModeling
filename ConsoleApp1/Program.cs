@@ -28,7 +28,7 @@ namespace ConsoleApp1
             if (SumRow == SumColumn)
             {
                 return true; //Задача закрытая
-            } 
+            }
             else
             {
                 Console.WriteLine("К сожалению, программа пока не умеет решать открытые задачи.");
@@ -51,7 +51,7 @@ namespace ConsoleApp1
             return max;
         }
         static void Print(int[,] Plan, int[,] Arr)
-        {       
+        {
             Console.WriteLine("Тарифый план:");
             for (int i = 0; i < Plan.GetLength(0); i++)
             {
@@ -67,17 +67,17 @@ namespace ConsoleApp1
                     }
                 }
                 Console.WriteLine();
-            }        
+            }
         }
         static void OutputAnswer(int[,] Plan, int[,] Tariff)
-        {                                            
+        {
             int V = (Tariff.GetLength(0) - 1) + (Tariff.GetLength(1) - 1) - 1; //Вырожденность
             int countV = 0; //Проверка на вырожденность
             int L = 0; //Целевая функция  
             for (int i = 1; i < Plan.GetLength(0); i++)
             {
                 for (int j = 1; j < Plan.GetLength(1); j++)
-                {  
+                {
                     L = L + (Plan[i, j] * Tariff[i, j]);
                     if (Plan[i, j] != 0)
                     {
@@ -178,10 +178,10 @@ namespace ConsoleApp1
                     }
                     Console.WriteLine();
                 }
-                while (SumCheck < (N-1)*(M-1))
+                while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Поиск минимального элемента
-                    int minEl = Max(Tariff);                   
+                    int minEl = Max(Tariff);
                     for (int i = 1; i < Tariff.GetLength(0); i++)
                     {
                         for (int j = 1; j < Tariff.GetLength(1); j++)
@@ -228,7 +228,7 @@ namespace ConsoleApp1
                 }
                 Print(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность    
-            } 
+            }
         }
         static void Metod3(int[,] Arr)
         {
@@ -316,22 +316,22 @@ namespace ConsoleApp1
                             if (Tariff[i, j] == minEl && Check[i, j] == Preference) //preference = 2, потом = 1
                             {
                                 {
-                                if (Tariff[0, j] >= Tariff[i, 0])
-                                {
-                                    Plan[i, j] = Tariff[i, 0];
-                                    Tariff[0, j] -= Tariff[i, 0];
-                                    Tariff[i, 0] -= Tariff[i, 0];
+                                    if (Tariff[0, j] >= Tariff[i, 0])
+                                    {
+                                        Plan[i, j] = Tariff[i, 0];
+                                        Tariff[0, j] -= Tariff[i, 0];
+                                        Tariff[i, 0] -= Tariff[i, 0];
+                                    }
+                                    else if (Tariff[0, j] < Tariff[i, 0])
+                                    {
+                                        Plan[i, j] = Tariff[0, j];
+                                        Tariff[i, 0] -= Tariff[0, j];
+                                        Tariff[0, j] -= Tariff[0, j];
+                                    }
+                                    Check[i, j] = 3;
                                 }
-                                else if (Tariff[0, j] < Tariff[i, 0])
-                                {
-                                    Plan[i, j] = Tariff[0, j];
-                                    Tariff[i, 0] -= Tariff[0, j];
-                                    Tariff[0, j] -= Tariff[0, j];
-                                }
-                                Check[i, j] = 3;
                             }
                         }
-                    }
                     }
                     //Проверка сколько осталось предпочтений
                     CountPref = 0;
@@ -355,7 +355,7 @@ namespace ConsoleApp1
             }
         }
         static void Metod4(int[,] Arr)
-        {        
+        {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
             int[,] Plan = new int[N, M];
@@ -366,15 +366,14 @@ namespace ConsoleApp1
             int IndexEl = 0; // Запоминает строку или столбец с максимальным штрафом
             int countMin2 = 0; //Счетчик сколько элементов в строке
             //Скопировали массив, чтобы не изменять значения и добавляем + 1 колонку и строку для штрафов
-            int[,] Tariff = new int[N + 1, M + 1];            
-            for (int i = 0; i < Tariff.GetLength(0)-1; i++)
+            int[,] Tariff = new int[N + 1, M + 1];
+            for (int i = 0; i < Tariff.GetLength(0) - 1; i++)
             {
-                for (int j = 0; j < Tariff.GetLength(1)-1; j++)
+                for (int j = 0; j < Tariff.GetLength(1) - 1; j++)
                 {
                     Tariff[i, j] = Arr[i, j];
                 }
             }
-
             //Подсчет тарифного плана
             if (Closed(Tariff))
             {
@@ -387,10 +386,8 @@ namespace ConsoleApp1
                     }
                     Console.WriteLine();
                 }
-
                 //ПЛАН
-                //(N - 2) * (M - 2))
-                while (SumCheck < ((N - 1) * (M - 1)))
+                while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Считаем штрафы по строкам в доп.столбец тарифов
                     for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
@@ -410,9 +407,9 @@ namespace ConsoleApp1
                             //Проверка чтобы второй минимальный элемент не был равен первому
                             if (Tariff[i, j] < MinEl2 && Tariff[i, j] > MinEl1 && Check[i, j] == 0)
                             {
-                                MinEl2 = Tariff[i, j];                                
-                            }                          
-                        }                     
+                                MinEl2 = Tariff[i, j];
+                            }
+                        }
                         if (Check[i, Tariff.GetLength(1) - 1] == 1) //Штрафы без учета заполненных
                         {
                             Tariff[i, Tariff.GetLength(1) - 1] = 0;
@@ -442,7 +439,7 @@ namespace ConsoleApp1
                     }
                     //Считаем штрафы по столбцам в доп. строку тарифов
                     for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
-                    {                     
+                    {
                         MinEl1 = MinEl2 = Max(Tariff);
                         countMin2 = 0;
                         for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
@@ -510,9 +507,6 @@ namespace ConsoleApp1
                             IndexEl = j;
                         }
                     }
-
-                    Console.WriteLine("МАКСИМАЛЬНЫЙ: " + MaxEl);
-
                     //Заполняем ячейки тарифом
                     MinEl = Max(Tariff);
                     if (What == 0)
@@ -520,7 +514,7 @@ namespace ConsoleApp1
                         //Находим минимальный элемент в строке, где макс штраф
                         for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
                         {
-                            if(MinEl > Tariff[IndexEl, j])
+                            if (MinEl > Tariff[IndexEl, j] && Check[IndexEl, j] == 0)
                             {
                                 MinEl = Tariff[IndexEl, j];
                             }
@@ -543,17 +537,15 @@ namespace ConsoleApp1
                                     Tariff[0, j] -= Tariff[0, j];
                                 }
                                 Check[IndexEl, j] = 1;
-                                //Больше не учитываем штрафы в заполненном столбце
-                                //Check[IndexEl, Tariff.GetLength(1) - 1] = 1;
                             }
                         }
                     }
                     else
                     {
-                        //Находим минимальный элемент в столбце, где макс штраф
+                        //Находим минимальный незаполненный элемент в столбце, где макс штраф
                         for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
                         {
-                            if (MinEl > Tariff[i, IndexEl])
+                            if (MinEl > Tariff[i, IndexEl] && Check[i, IndexEl] == 0)
                             {
                                 MinEl = Tariff[i, IndexEl];
                             }
@@ -576,20 +568,14 @@ namespace ConsoleApp1
                                     Tariff[0, IndexEl] -= Tariff[0, IndexEl];
                                 }
                                 Check[i, IndexEl] = 1;
-                                //Больше не учитываем штрафы в заполненной строке
-                                //Check[Tariff.GetLength(0) - 1, IndexEl] = 1;
                             }
                         }
-                     }
-
-
-                    Console.WriteLine("Мин в столбце строке макс: " + MinEl);
-
+                    }
                     //Если склад или потреб стали == 0, то заполняем столбец/строку 0.
                     for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
                     {
-                       if (Tariff[i, 0] == 0)
-                       {
+                        if (Tariff[i, 0] == 0)
+                        {
                             for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
                             {
                                 if (Check[i, j] == 0)
@@ -620,26 +606,6 @@ namespace ConsoleApp1
                             Check[Tariff.GetLength(0) - 1, j] = 1;
                         }
                     }
-                    
-                    Console.WriteLine("ПЕРВЫЙ ПУНКТ");
-                    for (int i = 0; i < Tariff.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < Tariff.GetLength(1); j++)
-                        {
-                            Console.Write(Tariff[i, j] + "\t");
-                        }
-                        Console.WriteLine();
-                    }
-                    Console.WriteLine("ЧЕЕЕК");
-                    for (int i = 0; i < Check.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < Check.GetLength(1); j++)
-                        {
-                            Console.Write(Check[i, j] + "\t");
-                        }
-                        Console.WriteLine();
-                    }
-
                     SumCheck = 0;
                     //Проверка на количество заполненных элементов
                     for (int i = 1; i < Check.GetLength(0) - 1; i++)
@@ -649,68 +615,87 @@ namespace ConsoleApp1
                             SumCheck += Check[i, j];
                         }
                     }
-                }              
+                }
                 Print(Plan, Arr); //Вывод тарифного плана
-                OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
+
+                int[,] newTariff = new int[N, M];
+                for (int i = 0; i < Tariff.GetLength(0) - 1; i++)
+                {
+                    for (int j = 0; j < Tariff.GetLength(1) - 1; j++)
+                    {
+                        newTariff[i, j] = Tariff[i, j];
+                    }
+                }
+
+                OutputAnswer(Plan, newTariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
         static void Main()
         {
-            int N, M; 
-            Console.WriteLine("Данная программа решает закрытые транспортные задачи.");
-            Console.WriteLine("Введите количество склада:");
-            N = Convert.ToInt32(Console.ReadLine()) + 1;
-            Console.WriteLine("Введите количество потреблений:");
-            M = Convert.ToInt32(Console.ReadLine()) + 1;      
-            int[,] Tariff = new int[N, M];
-            //Ввод
-            //Console.WriteLine("Введите склад:");  //Строки
-            //for (int i = 1; i < Tariff.GetLength(1); i++)
-            //{
-            //    Tariff[0, i] = Convert.ToInt32(Console.ReadLine());
-            //}
-            //Console.WriteLine("Введите потребления:"); //Столбцы
-            //for (int i = 1; i < Tariff.GetLength(0); i++)
-            //{
-            //    Tariff[i, 0] = Convert.ToInt32(Console.ReadLine());
-            //}
-            //Console.WriteLine("Введите тарифы:");
-            //for (int i = 1; i < Tariff.GetLength(0); i++)
-            //{
-            //    for (int j = 1; j < Tariff.GetLength(1); j++)
-            //    {
-            //        Tariff[i, j] = Convert.ToInt32(Console.ReadLine());
-            //    }
-            //}
-            //Строки
-            Tariff[0, 1] = 13; Tariff[0, 2] = 5; Tariff[0, 3] = 13; Tariff[0, 4] = 12; Tariff[0, 5] = 13;
-            //Столбцы
-            Tariff[1, 0] = 14; Tariff[2, 0] = 14; Tariff[3, 0] = 14; Tariff[4, 0] = 14;
-            //Тарифы
-            Tariff[1, 1] = 16; Tariff[1, 2] = 26; Tariff[1, 3] = 12; Tariff[1, 4] = 24; Tariff[1, 5] = 3;
-            Tariff[2, 1] = 5; Tariff[2, 2] = 2; Tariff[2, 3] = 19; Tariff[2, 4] = 27; Tariff[2, 5] = 2;
-            Tariff[3, 1] = 29; Tariff[3, 2] = 23; Tariff[3, 3] = 25; Tariff[3, 4] = 16; Tariff[3, 5] = 8;
-            Tariff[4, 1] = 2; Tariff[4, 2] = 25; Tariff[4, 3] = 14; Tariff[4, 4] = 15; Tariff[4, 5] = 21;
-            int n, end;
-            do
+            try
             {
-                Console.WriteLine("Выберите каким методом решить транспортную задачу: ");
-                Console.WriteLine("1. Метод северно-западного угла.");
-                Console.WriteLine("2. Метод минимальной стоимости.");
-                Console.WriteLine("3. Метод двойного предпочтения.");
-                Console.WriteLine("4. Метод аппроксимации Фогеля.");
-                n = Convert.ToInt32(Console.ReadLine());
-                switch (n)
+                int N, M;
+                Console.WriteLine("Данная программа решает закрытые транспортные задачи.");
+                Console.WriteLine("Введите количество склада:");
+                N = Convert.ToInt32(Console.ReadLine()) + 1;
+                Console.WriteLine("Введите количество потреблений:");
+                M = Convert.ToInt32(Console.ReadLine()) + 1;
+                int[,] Tariff = new int[N, M];
+                //Ввод
+                Console.WriteLine("Введите склад:");  //Строки
+                for (int i = 1; i < Tariff.GetLength(1); i++)
                 {
-                    case 1: Metod1(Tariff); break;
-                    case 2: Metod2(Tariff); break;
-                    case 3: Metod3(Tariff); break;
-                    case 4: Metod4(Tariff); break;
-                    default: Console.WriteLine("Такого метода нет"); break;
+                    Tariff[0, i] = Convert.ToInt32(Console.ReadLine());
                 }
-                Console.WriteLine("Вы хотите выбрать другой метод? (1 - да, 0 - нет).");
-                end = Convert.ToInt32(Console.ReadLine());
-            } while (end > 0);
+                Console.WriteLine("Введите потребления:"); //Столбцы
+                for (int i = 1; i < Tariff.GetLength(0); i++)
+                {
+                    Tariff[i, 0] = Convert.ToInt32(Console.ReadLine());
+                }
+                Console.WriteLine("Введите тарифы:");
+                for (int i = 1; i < Tariff.GetLength(0); i++)
+                {
+                    for (int j = 1; j < Tariff.GetLength(1); j++)
+                    {
+                        Tariff[i, j] = Convert.ToInt32(Console.ReadLine());
+                    }
+                }
+                ////Строки
+                //Tariff[0, 1] = 13; Tariff[0, 2] = 5; Tariff[0, 3] = 13; Tariff[0, 4] = 12; Tariff[0, 5] = 13;
+                ////Столбцы
+                //Tariff[1, 0] = 14; Tariff[2, 0] = 14; Tariff[3, 0] = 14; Tariff[4, 0] = 14;
+                ////Тарифы
+                //Tariff[1, 1] = 16; Tariff[1, 2] = 26; Tariff[1, 3] = 12; Tariff[1, 4] = 24; Tariff[1, 5] = 3;
+                //Tariff[2, 1] = 5; Tariff[2, 2] = 2; Tariff[2, 3] = 19; Tariff[2, 4] = 27; Tariff[2, 5] = 2;
+                //Tariff[3, 1] = 29; Tariff[3, 2] = 23; Tariff[3, 3] = 25; Tariff[3, 4] = 16; Tariff[3, 5] = 8;
+                //Tariff[4, 1] = 2; Tariff[4, 2] = 25; Tariff[4, 3] = 14; Tariff[4, 4] = 15; Tariff[4, 5] = 21;
+
+                int n, end;
+                do
+                {
+                    Console.WriteLine("Выберите каким методом решить транспортную задачу: ");
+                    Console.WriteLine("1. Метод северно-западного угла.");
+                    Console.WriteLine("2. Метод минимальной стоимости.");
+                    Console.WriteLine("3. Метод двойного предпочтения.");
+                    Console.WriteLine("4. Метод аппроксимации Фогеля.");
+                    n = Convert.ToInt32(Console.ReadLine());
+                    switch (n)
+                    {
+                        case 1: Metod1(Tariff); break;
+                        case 2: Metod2(Tariff); break;
+                        case 3: Metod3(Tariff); break;
+                        case 4: Metod4(Tariff); break;
+                        default: Console.WriteLine("Такого метода нет"); break;
+                    }
+                    Console.WriteLine("Вы хотите выбрать другой метод? (1 - да, 0 - нет).");
+                    end = Convert.ToInt32(Console.ReadLine());
+                } while (end > 0);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Тип ошибки: {e.GetType().Name}");
+                Console.WriteLine($"Строка: {e.StackTrace}");
+            }
         }
     }
 }

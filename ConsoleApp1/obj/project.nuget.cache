@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "UerdSqbIaUF0qj4lwVxJavSqCMhN6zIbxMjJRvHU2mMUDvoVi0Z2DtdbbLF22FmVjwOMEu7UbB2XyeRTbPNHWQ==",
+  "dgSpecHash": "PlgssEKwIt7LTJ8k8PO3eh83uUzR+CrEkNbUpjPXgKQaggD40fejo3CIm8ywEc4GKt2HX+qZCvlJdhDwBxNzEw==",
   "success": true,
-  "projectFilePath": "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.15\\microsoft.netcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.15\\microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.15\\microsoft.netcore.app.host.win-x64.7.0.15.nupkg.sha512"
+  ],
   "logs": []
 }
