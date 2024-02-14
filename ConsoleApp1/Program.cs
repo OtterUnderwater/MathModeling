@@ -364,6 +364,7 @@ namespace ConsoleApp1
             int MinEl1, MinEl2, MaxEl, MinEl;
             int What = 0; // 0 - строка, 1 - столбец
             int IndexEl = 0; // Запоминает строку или столбец с максимальным штрафом
+            int countMin2 = 0; //Счетчик сколько элементов в строке
             //Скопировали массив, чтобы не изменять значения и добавляем + 1 колонку и строку для штрафов
             int[,] Tariff = new int[N + 1, M + 1];            
             for (int i = 0; i < Tariff.GetLength(0)-1; i++)
@@ -388,17 +389,20 @@ namespace ConsoleApp1
                 }
 
                 //ПЛАН
-                while (SumCheck < (N - 1) * (M - 1))
+                //(N - 2) * (M - 2))
+                while (SumCheck < ((N - 1) * (M - 1)))
                 {
                     //Считаем штрафы по строкам в доп.столбец тарифов
                     for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
                     {
                         MinEl1 = MinEl2 = Max(Tariff);
+                        countMin2 = 0;
                         for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
                         {
-                            if (Tariff[i, j] < MinEl1 && Check[i, j] == 0)
+                            if (Tariff[i, j] <= MinEl1 && Check[i, j] == 0)
                             {
                                 MinEl1 = Tariff[i, j];
+                                countMin2++;
                             }
                         }
                         for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
@@ -406,27 +410,47 @@ namespace ConsoleApp1
                             //Проверка чтобы второй минимальный элемент не был равен первому
                             if (Tariff[i, j] < MinEl2 && Tariff[i, j] > MinEl1 && Check[i, j] == 0)
                             {
-                                MinEl2 = Tariff[i, j];
-                            }
-                        }
+                                MinEl2 = Tariff[i, j];                                
+                            }                          
+                        }                     
                         if (Check[i, Tariff.GetLength(1) - 1] == 1) //Штрафы без учета заполненных
                         {
                             Tariff[i, Tariff.GetLength(1) - 1] = 0;
                         }
                         else
                         {
-                            Tariff[i, Tariff.GetLength(1) - 1] = MinEl2 - MinEl1; //Штраф по строке
+                            //Проверка пересчета штрафа
+                            if (MinEl2 == Max(Tariff))
+                            {
+                                if (countMin2 == 1)
+                                {
+                                    //Если остался 1 элемент
+                                    Tariff[i, Tariff.GetLength(1) - 1] = MinEl1;
+                                }
+                                else if (countMin2 == 2)
+                                {
+                                    //Если осталось 2 равных элемента
+                                    Tariff[i, Tariff.GetLength(1) - 1] = 0;
+                                }
+                            }
+                            //Если все норм
+                            else
+                            {
+                                Tariff[i, Tariff.GetLength(1) - 1] = MinEl2 - MinEl1; //Штраф по строке
+                            }
                         }
                     }
                     //Считаем штрафы по столбцам в доп. строку тарифов
                     for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
                     {                     
                         MinEl1 = MinEl2 = Max(Tariff);
+                        countMin2 = 0;
                         for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
                         {
                             if (Tariff[i, j] <= MinEl1 && Check[i, j] == 0)
                             {
                                 MinEl1 = Tariff[i, j];
+                                countMin2++;
                             }
                         }
                         for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
@@ -443,7 +467,25 @@ namespace ConsoleApp1
                         }
                         else
                         {
-                            Tariff[Tariff.GetLength(0) - 1, j] = MinEl2 - MinEl1; //Штраф по строке
+                            //Проверка пересчета штрафа
+                            if (MinEl2 == Max(Tariff))
+                            {
+                                if (countMin2 == 1)
+                                {
+                                    //Если остался 1 элемент
+                                    Tariff[Tariff.GetLength(0) - 1, j] = MinEl1;
+                                }
+                                else if (countMin2 == 2)
+                                {
+                                    //Если осталось 2 равных элемента
+                                    Tariff[Tariff.GetLength(0) - 1, j] = 0;
+                                }
+                            }
+                            //Если все норм
+                            else
+                            {
+                                Tariff[Tariff.GetLength(0) - 1, j] = MinEl2 - MinEl1; //Штраф по столбцу
+                            }
                         }
                     }
                     //Поиск максимального штрафа
@@ -598,8 +640,6 @@ namespace ConsoleApp1
                         Console.WriteLine();
                     }
 
-                    //SumCheck++;
-
                     SumCheck = 0;
                     //Проверка на количество заполненных элементов
                     for (int i = 1; i < Check.GetLength(0) - 1; i++)
@@ -609,13 +649,11 @@ namespace ConsoleApp1
                             SumCheck += Check[i, j];
                         }
                     }
-                }
+                }              
                 Print(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
-
-
         static void Main()
         {
             int N, M; 
@@ -645,7 +683,7 @@ namespace ConsoleApp1
             //    }
             //}
             //Строки
-            Tariff[0, 1] = 13; Tariff[0, 2] = 5; Tariff[0, 3] = 13; Tariff[0, 4] = 12;  Tariff[0, 5] = 13;
+            Tariff[0, 1] = 13; Tariff[0, 2] = 5; Tariff[0, 3] = 13; Tariff[0, 4] = 12; Tariff[0, 5] = 13;
             //Столбцы
             Tariff[1, 0] = 14; Tariff[2, 0] = 14; Tariff[3, 0] = 14; Tariff[4, 0] = 14;
             //Тарифы
