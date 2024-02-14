@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Schema;
 
-namespace ВходнойКонтроль
+namespace ConsoleApp1
 {
     class Control
     {
@@ -105,7 +105,6 @@ namespace ВходнойКонтроль
             //Скопировали полученный массив, чтобы не изменять значения
             int[,] Tariff = new int[N, M];
             Array.Copy(Arr, Tariff, Arr.Length);
-
             //Подсчет тарифного плана
             if (Closed(Tariff))
             {
@@ -125,7 +124,7 @@ namespace ВходнойКонтроль
                     {
                         for (int i = 1; i < Tariff.GetLength(0); i++)
                         {
-                            if (Check[i, j] == 0)
+                            if (Check[i, j] == 0) //Ячейка свободна
                             {
                                 if (Tariff[0, j] >= Tariff[i, 0])
                                 {
@@ -182,7 +181,7 @@ namespace ВходнойКонтроль
                 while (SumCheck < (N-1)*(M-1))
                 {
                     //Поиск минимального элемента
-                    int minEl = Max(Tariff);
+                    int minEl = Max(Tariff);                   
                     for (int i = 1; i < Tariff.GetLength(0); i++)
                     {
                         for (int j = 1; j < Tariff.GetLength(1); j++)
@@ -356,12 +355,15 @@ namespace ВходнойКонтроль
             }
         }
         static void Metod4(int[,] Arr)
-        {
+        {        
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
             int[,] Plan = new int[N, M];
-            int[,] Check = new int[N, M];
+            int[,] Check = new int[N + 1, M + 1];
             int SumCheck = 0; // 0 - не заполнен тариф, 1 - заполнен тариф
+            int MinEl1, MinEl2, MaxEl, MinEl;
+            int What = 0; // 0 - строка, 1 - столбец
+            int IndexEl = 0; // Запоминает строку или столбец с максимальным штрафом
             //Скопировали массив, чтобы не изменять значения и добавляем + 1 колонку и строку для штрафов
             int[,] Tariff = new int[N + 1, M + 1];            
             for (int i = 0; i < Tariff.GetLength(0)-1; i++)
@@ -371,9 +373,6 @@ namespace ВходнойКонтроль
                     Tariff[i, j] = Arr[i, j];
                 }
             }
-            //int[,] Fine = new int[N+1, M + 1];
-            //Fine = Tariff;
-            //Array.Resize(ref myArr, myArr.Length + 5);
 
             //Подсчет тарифного плана
             if (Closed(Tariff))
@@ -388,46 +387,235 @@ namespace ВходнойКонтроль
                     Console.WriteLine();
                 }
 
-                //while (SumCheck < (N - 1) * (M - 1))
-                //{
-                //    //Заполняем ячейки тарифом
-                //    for (int j = 1; j < Tariff.GetLength(1); j++)
-                //    {
-                //        for (int i = 1; i < Tariff.GetLength(0); i++)
-                //        {
-                //            if (Check[i, j] == 0)
-                //            {
-                //                if (Tariff[0, j] >= Tariff[i, 0])
-                //                {
-                //                    Plan[i, j] = Tariff[i, 0];
-                //                    Tariff[0, j] -= Tariff[i, 0];
-                //                    Tariff[i, 0] -= Tariff[i, 0];
-                //                }
-                //                else if (Tariff[0, j] < Tariff[i, 0])
-                //                {
-                //                    Plan[i, j] = Tariff[0, j];
-                //                    Tariff[i, 0] -= Tariff[0, j];
-                //                    Tariff[0, j] -= Tariff[0, j];
-                //                }
-                //                Check[i, j] = 1;
-                //            }
-                //        }
-                //    }
-                //    SumCheck = 0;
-                //    //Проверка на количество заполненных элементов
-                //    for (int i = 1; i < Check.GetLength(0); i++)
-                //    {
-                //        for (int j = 1; j < Check.GetLength(1); j++)
-                //        {
-                //            SumCheck += Check[i, j];
-                //        }
-                //    }
-                //}
+                //ПЛАН
+                while (SumCheck < (N - 1) * (M - 1))
+                {
+                    //Считаем штрафы по строкам в доп.столбец тарифов
+                    for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
+                    {
+                        MinEl1 = MinEl2 = Max(Tariff);
+                        for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
+                        {
+                            if (Tariff[i, j] < MinEl1 && Check[i, j] == 0)
+                            {
+                                MinEl1 = Tariff[i, j];
+                            }
+                        }
+                        for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
+                        {
+                            //Проверка чтобы второй минимальный элемент не был равен первому
+                            if (Tariff[i, j] < MinEl2 && Tariff[i, j] > MinEl1 && Check[i, j] == 0)
+                            {
+                                MinEl2 = Tariff[i, j];
+                            }
+                        }
+                        if (Check[i, Tariff.GetLength(1) - 1] == 1) //Штрафы без учета заполненных
+                        {
+                            Tariff[i, Tariff.GetLength(1) - 1] = 0;
+                        }
+                        else
+                        {
+                            Tariff[i, Tariff.GetLength(1) - 1] = MinEl2 - MinEl1; //Штраф по строке
+                        }
+                    }
+                    //Считаем штрафы по столбцам в доп. строку тарифов
+                    for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
+                    {                     
+                        MinEl1 = MinEl2 = Max(Tariff);
+                        for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
+                        {
+                            if (Tariff[i, j] <= MinEl1 && Check[i, j] == 0)
+                            {
+                                MinEl1 = Tariff[i, j];
+                            }
+                        }
+                        for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
+                        {
+                            //Проверка чтобы второй минимальный элемент не был равен первому
+                            if (Tariff[i, j] < MinEl2 && Tariff[i, j] > MinEl1 && Check[i, j] == 0)
+                            {
+                                MinEl2 = Tariff[i, j];
+                            }
+                        }
+                        if (Check[Tariff.GetLength(0) - 1, j] == 1) //Штрафы без учета заполненных
+                        {
+                            Tariff[Tariff.GetLength(0) - 1, j] = 0;
+                        }
+                        else
+                        {
+                            Tariff[Tariff.GetLength(0) - 1, j] = MinEl2 - MinEl1; //Штраф по строке
+                        }
+                    }
+                    //Поиск максимального штрафа
+                    MaxEl = 0;
+                    for (int i = 1; i < Tariff.GetLength(0); i++)
+                    {
+                        //Максимальное в столбце dj
+                        if (Tariff[i, Tariff.GetLength(1) - 1] > MaxEl)
+                        {
+                            MaxEl = Tariff[i, Tariff.GetLength(1) - 1];
+                            What = 0; //Запоминаем строку Max элемента
+                            IndexEl = i;
+                        }
+                    }
+                    for (int j = 1; j < Tariff.GetLength(1); j++)
+                    {
+                        //Максимальное в строке di
+                        if (Tariff[Tariff.GetLength(0) - 1, j] > MaxEl)
+                        {
+                            MaxEl = Tariff[Tariff.GetLength(0) - 1, j];
+                            What = 1; //Запоминаем столбец Max элемента
+                            IndexEl = j;
+                        }
+                    }
 
+                    Console.WriteLine("МАКСИМАЛЬНЫЙ: " + MaxEl);
+
+                    //Заполняем ячейки тарифом
+                    MinEl = Max(Tariff);
+                    if (What == 0)
+                    {
+                        //Находим минимальный элемент в строке, где макс штраф
+                        for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
+                        {
+                            if(MinEl > Tariff[IndexEl, j])
+                            {
+                                MinEl = Tariff[IndexEl, j];
+                            }
+                        }
+                        //Заполняем ячейку с мин элементом и массив чек
+                        for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
+                        {
+                            if (Check[IndexEl, j] == 0 && Tariff[IndexEl, j] == MinEl)
+                            {
+                                if (Tariff[0, j] >= Tariff[IndexEl, 0])
+                                {
+                                    Plan[IndexEl, j] = Tariff[IndexEl, 0];
+                                    Tariff[0, j] -= Tariff[IndexEl, 0];
+                                    Tariff[IndexEl, 0] -= Tariff[IndexEl, 0];
+                                }
+                                else if (Tariff[0, j] < Tariff[IndexEl, 0])
+                                {
+                                    Plan[IndexEl, j] = Tariff[0, j];
+                                    Tariff[IndexEl, 0] -= Tariff[0, j];
+                                    Tariff[0, j] -= Tariff[0, j];
+                                }
+                                Check[IndexEl, j] = 1;
+                                //Больше не учитываем штрафы в заполненном столбце
+                                //Check[IndexEl, Tariff.GetLength(1) - 1] = 1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //Находим минимальный элемент в столбце, где макс штраф
+                        for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
+                        {
+                            if (MinEl > Tariff[i, IndexEl])
+                            {
+                                MinEl = Tariff[i, IndexEl];
+                            }
+                        }
+                        //Заполняем ячейку с мин элементом и массив чек
+                        for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
+                        {
+                            if (Check[i, IndexEl] == 0 && Tariff[i, IndexEl] == MinEl)
+                            {
+                                if (Tariff[0, IndexEl] >= Tariff[i, 0])
+                                {
+                                    Plan[i, IndexEl] = Tariff[i, 0];
+                                    Tariff[0, IndexEl] -= Tariff[i, 0];
+                                    Tariff[i, 0] -= Tariff[i, 0];
+                                }
+                                else if (Tariff[0, IndexEl] < Tariff[i, 0])
+                                {
+                                    Plan[i, IndexEl] = Tariff[0, IndexEl];
+                                    Tariff[i, 0] -= Tariff[0, IndexEl];
+                                    Tariff[0, IndexEl] -= Tariff[0, IndexEl];
+                                }
+                                Check[i, IndexEl] = 1;
+                                //Больше не учитываем штрафы в заполненной строке
+                                //Check[Tariff.GetLength(0) - 1, IndexEl] = 1;
+                            }
+                        }
+                     }
+
+
+                    Console.WriteLine("Мин в столбце строке макс: " + MinEl);
+
+                    //Если склад или потреб стали == 0, то заполняем столбец/строку 0.
+                    for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
+                    {
+                       if (Tariff[i, 0] == 0)
+                       {
+                            for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
+                            {
+                                if (Check[i, j] == 0)
+                                {
+                                    Plan[i, j] = 0;
+                                    Check[i, j] = 1;
+                                }
+
+                            }
+                            //Больше не учитываем штрафы в заполненном столбце
+                            Check[i, Tariff.GetLength(1) - 1] = 1;
+                        }
+                    }
+                    for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
+                    {
+                        if (Tariff[0, j] == 0)
+                        {
+                            for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
+                            {
+                                if (Check[i, j] == 0)
+                                {
+                                    Plan[i, j] = 0;
+                                    Check[i, j] = 1;
+                                }
+
+                            }
+                            //Больше не учитываем штрафы в заполненном столбце
+                            Check[Tariff.GetLength(0) - 1, j] = 1;
+                        }
+                    }
+                    
+                    Console.WriteLine("ПЕРВЫЙ ПУНКТ");
+                    for (int i = 0; i < Tariff.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < Tariff.GetLength(1); j++)
+                        {
+                            Console.Write(Tariff[i, j] + "\t");
+                        }
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine("ЧЕЕЕК");
+                    for (int i = 0; i < Check.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < Check.GetLength(1); j++)
+                        {
+                            Console.Write(Check[i, j] + "\t");
+                        }
+                        Console.WriteLine();
+                    }
+
+                    //SumCheck++;
+
+                    SumCheck = 0;
+                    //Проверка на количество заполненных элементов
+                    for (int i = 1; i < Check.GetLength(0) - 1; i++)
+                    {
+                        for (int j = 1; j < Check.GetLength(1) - 1; j++)
+                        {
+                            SumCheck += Check[i, j];
+                        }
+                    }
+                }
                 Print(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
+
+
         static void Main()
         {
             int N, M; 
