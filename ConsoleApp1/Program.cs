@@ -50,7 +50,7 @@ namespace ConsoleApp1
             }
             return max;
         }
-        static void Print(int[,] Plan, int[,] Arr)
+        static void PrintPlan(int[,] Plan, int[,] Arr)
         {
             Console.WriteLine("Тарифый план:");
             for (int i = 0; i < Plan.GetLength(0); i++)
@@ -65,6 +65,18 @@ namespace ConsoleApp1
                     {
                         Console.Write(Plan[i, j] + " \t");
                     }
+                }
+                Console.WriteLine();
+            }
+        }
+        static void PrintTariff(int[,] Tariff)
+        {
+            Console.WriteLine("Тарифы:");
+            for (int i = 0; i < Tariff.GetLength(0); i++)
+            {
+                for (int j = 0; j < Tariff.GetLength(1); j++)
+                {
+                    Console.Write(Tariff[i, j] + " \t");
                 }
                 Console.WriteLine();
             }
@@ -87,7 +99,7 @@ namespace ConsoleApp1
             }
             if (V == countV)
             {
-                Console.WriteLine("Невырожденная задача.");
+                Console.WriteLine("Невырожденная задача");
                 Console.WriteLine($"L(X) = {L}");
             }
             else
@@ -108,15 +120,7 @@ namespace ConsoleApp1
             //Подсчет тарифного плана
             if (Closed(Tariff))
             {
-                Console.WriteLine("Тарифы:");
-                for (int i = 0; i < Tariff.GetLength(0); i++)
-                {
-                    for (int j = 0; j < Tariff.GetLength(1); j++)
-                    {
-                        Console.Write(Tariff[i, j] + " \t");
-                    }
-                    Console.WriteLine();
-                }
+                PrintTariff(Tariff);
                 while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Заполняем ячейки тарифом
@@ -152,7 +156,7 @@ namespace ConsoleApp1
                         }
                     }
                 }
-                Print(Plan, Arr); //Вывод тарифного плана
+                PrintPlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
@@ -169,15 +173,7 @@ namespace ConsoleApp1
             //Подсчет тарифного плана
             if (Closed(Tariff))
             {
-                Console.WriteLine("Тарифы:");
-                for (int i = 0; i < Tariff.GetLength(0); i++)
-                {
-                    for (int j = 0; j < Tariff.GetLength(1); j++)
-                    {
-                        Console.Write(Tariff[i, j] + " \t");
-                    }
-                    Console.WriteLine();
-                }
+                PrintTariff(Tariff);
                 while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Поиск минимального элемента
@@ -226,7 +222,7 @@ namespace ConsoleApp1
                         }
                     }
                 }
-                Print(Plan, Arr); //Вывод тарифного плана
+                PrintPlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность    
             }
         }
@@ -245,15 +241,7 @@ namespace ConsoleApp1
             //Подсчет тарифного плана
             if (Closed(Tariff))
             {
-                Console.WriteLine("Тарифы:");
-                for (int i = 0; i < Tariff.GetLength(0); i++)
-                {
-                    for (int j = 0; j < Tariff.GetLength(1); j++)
-                    {
-                        Console.Write(Tariff[i, j] + " \t");
-                    }
-                    Console.WriteLine();
-                }
+                PrintTariff(Tariff);
                 //Двойное предпочтение
                 //Расставляем плюсы в предпочтении по строкам
                 for (int i = 1; i < Tariff.GetLength(0); i++)
@@ -350,7 +338,7 @@ namespace ConsoleApp1
                         Preference--;
                     }
                 }
-                Print(Plan, Arr); //Вывод тарифного плана
+                PrintPlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
@@ -377,16 +365,7 @@ namespace ConsoleApp1
             //Подсчет тарифного плана
             if (Closed(Tariff))
             {
-                Console.WriteLine("Тарифы:");
-                for (int i = 0; i < Tariff.GetLength(0); i++)
-                {
-                    for (int j = 0; j < Tariff.GetLength(1); j++)
-                    {
-                        Console.Write(Tariff[i, j] + " \t");
-                    }
-                    Console.WriteLine();
-                }
-                //ПЛАН
+                PrintTariff(Arr);
                 while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Считаем штрафы по строкам в доп.столбец тарифов
@@ -616,7 +595,6 @@ namespace ConsoleApp1
                         }
                     }
                 }
-                Print(Plan, Arr); //Вывод тарифного плана
 
                 int[,] newTariff = new int[N, M];
                 for (int i = 0; i < Tariff.GetLength(0) - 1; i++)
@@ -626,7 +604,7 @@ namespace ConsoleApp1
                         newTariff[i, j] = Tariff[i, j];
                     }
                 }
-
+                PrintPlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, newTariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
@@ -642,34 +620,33 @@ namespace ConsoleApp1
                 M = Convert.ToInt32(Console.ReadLine()) + 1;
                 int[,] Tariff = new int[N, M];
                 //Ввод
-                Console.WriteLine("Введите склад:");  //Строки
-                for (int i = 1; i < Tariff.GetLength(1); i++)
-                {
-                    Tariff[0, i] = Convert.ToInt32(Console.ReadLine());
-                }
-                Console.WriteLine("Введите потребления:"); //Столбцы
-                for (int i = 1; i < Tariff.GetLength(0); i++)
-                {
-                    Tariff[i, 0] = Convert.ToInt32(Console.ReadLine());
-                }
-                Console.WriteLine("Введите тарифы:");
-                for (int i = 1; i < Tariff.GetLength(0); i++)
-                {
-                    for (int j = 1; j < Tariff.GetLength(1); j++)
-                    {
-                        Tariff[i, j] = Convert.ToInt32(Console.ReadLine());
-                    }
-                }
-                ////Строки
-                //Tariff[0, 1] = 13; Tariff[0, 2] = 5; Tariff[0, 3] = 13; Tariff[0, 4] = 12; Tariff[0, 5] = 13;
-                ////Столбцы
-                //Tariff[1, 0] = 14; Tariff[2, 0] = 14; Tariff[3, 0] = 14; Tariff[4, 0] = 14;
-                ////Тарифы
-                //Tariff[1, 1] = 16; Tariff[1, 2] = 26; Tariff[1, 3] = 12; Tariff[1, 4] = 24; Tariff[1, 5] = 3;
-                //Tariff[2, 1] = 5; Tariff[2, 2] = 2; Tariff[2, 3] = 19; Tariff[2, 4] = 27; Tariff[2, 5] = 2;
-                //Tariff[3, 1] = 29; Tariff[3, 2] = 23; Tariff[3, 3] = 25; Tariff[3, 4] = 16; Tariff[3, 5] = 8;
-                //Tariff[4, 1] = 2; Tariff[4, 2] = 25; Tariff[4, 3] = 14; Tariff[4, 4] = 15; Tariff[4, 5] = 21;
-
+                //Console.WriteLine("Введите склад:");  //Строки
+                //for (int i = 1; i < Tariff.GetLength(1); i++)
+                //{
+                //    Tariff[0, i] = Convert.ToInt32(Console.ReadLine());
+                //}
+                //Console.WriteLine("Введите потребления:"); //Столбцы
+                //for (int i = 1; i < Tariff.GetLength(0); i++)
+                //{
+                //    Tariff[i, 0] = Convert.ToInt32(Console.ReadLine());
+                //}
+                //Console.WriteLine("Введите тарифы:");
+                //for (int i = 1; i < Tariff.GetLength(0); i++)
+                //{
+                //    for (int j = 1; j < Tariff.GetLength(1); j++)
+                //    {
+                //        Tariff[i, j] = Convert.ToInt32(Console.ReadLine());
+                //    }
+                //}
+                //Строки
+                Tariff[0, 1] = 13; Tariff[0, 2] = 5; Tariff[0, 3] = 13; Tariff[0, 4] = 12; Tariff[0, 5] = 13;
+                //Столбцы
+                Tariff[1, 0] = 14; Tariff[2, 0] = 14; Tariff[3, 0] = 14; Tariff[4, 0] = 14;
+                //Тарифы
+                Tariff[1, 1] = 16; Tariff[1, 2] = 26; Tariff[1, 3] = 12; Tariff[1, 4] = 24; Tariff[1, 5] = 3;
+                Tariff[2, 1] = 5; Tariff[2, 2] = 2; Tariff[2, 3] = 19; Tariff[2, 4] = 27; Tariff[2, 5] = 2;
+                Tariff[3, 1] = 29; Tariff[3, 2] = 23; Tariff[3, 3] = 25; Tariff[3, 4] = 16; Tariff[3, 5] = 8;
+                Tariff[4, 1] = 2; Tariff[4, 2] = 25; Tariff[4, 3] = 14; Tariff[4, 4] = 15; Tariff[4, 5] = 21;
                 int n, end;
                 do
                 {
