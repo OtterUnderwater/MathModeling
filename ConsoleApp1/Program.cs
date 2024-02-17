@@ -50,6 +50,18 @@ namespace ConsoleApp1
             }
             return max;
         }
+        static int AllCheck(int[,] Check)
+        {
+            int SumCheck = 0;
+            for (int i = 1; i < Check.GetLength(0); i++)
+            {
+                for (int j = 1; j < Check.GetLength(1); j++)
+                {
+                    SumCheck += Check[i, j];
+                }
+            }
+            return SumCheck;
+        }
         static void PrintPlan(int[,] Plan, int[,] Arr)
         {
             Console.WriteLine("Тарифый план:");
@@ -146,15 +158,8 @@ namespace ConsoleApp1
                             }
                         }
                     }
-                    SumCheck = 0;
                     //Проверка на количество заполненных элементов
-                    for (int i = 1; i < Check.GetLength(0); i++)
-                    {
-                        for (int j = 1; j < Check.GetLength(1); j++)
-                        {
-                            SumCheck += Check[i, j];
-                        }
-                    }
+                    SumCheck = AllCheck(Check);
                 }
                 PrintPlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
@@ -212,15 +217,8 @@ namespace ConsoleApp1
                             }
                         }
                     }
-                    SumCheck = 0;
                     //Проверка на количество заполненных элементов
-                    for (int i = 1; i < Check.GetLength(0); i++)
-                    {
-                        for (int j = 1; j < Check.GetLength(1); j++)
-                        {
-                            SumCheck += Check[i, j];
-                        }
-                    }
+                    SumCheck = AllCheck(Check);                   
                 }
                 PrintPlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность    
@@ -595,7 +593,6 @@ namespace ConsoleApp1
                         }
                     }
                 }
-
                 int[,] newTariff = new int[N, M];
                 for (int i = 0; i < Tariff.GetLength(0) - 1; i++)
                 {
@@ -618,7 +615,26 @@ namespace ConsoleApp1
                 N = Convert.ToInt32(Console.ReadLine()) + 1;
                 Console.WriteLine("Введите количество потреблений:");
                 M = Convert.ToInt32(Console.ReadLine()) + 1;
-                int[,] Tariff = new int[N, M];
+                //int[,] Tariff =
+                //    {{ 0, 13, 5, 13, 12, 13},
+                //    { 14, 16, 26, 12, 24, 3},
+                //    { 14, 5, 2, 19, 27, 2},
+                //    { 14, 29, 23, 25, 16, 8},
+                //    { 14, 2, 25, 14, 15, 21}};
+
+                //int[,] Tariff =
+                //    {{ 0, 27, 25, 30, 35, 23},
+                //    { 40, 70, 85, 55, 120, 120},
+                //    { 40, 110, 90, 75, 110, 120},
+                //    { 60, 115, 115, 70, 90, 120}};
+
+                int[,] Tariff =
+                    {{ 0, 27, 25, 30, 35, 23},
+                    { 40, 70, 85, 55, 120, 120},
+                    { 40, 110, 90, 75, 110, 120},
+                    { 60, 135, 95, 80, 75, 120}};
+
+                //int[,] Tariff = new int[N, M];
                 //Ввод
                 //Console.WriteLine("Введите склад:");  //Строки
                 //for (int i = 1; i < Tariff.GetLength(1); i++)
@@ -638,15 +654,6 @@ namespace ConsoleApp1
                 //        Tariff[i, j] = Convert.ToInt32(Console.ReadLine());
                 //    }
                 //}
-                //Строки
-                Tariff[0, 1] = 13; Tariff[0, 2] = 5; Tariff[0, 3] = 13; Tariff[0, 4] = 12; Tariff[0, 5] = 13;
-                //Столбцы
-                Tariff[1, 0] = 14; Tariff[2, 0] = 14; Tariff[3, 0] = 14; Tariff[4, 0] = 14;
-                //Тарифы
-                Tariff[1, 1] = 16; Tariff[1, 2] = 26; Tariff[1, 3] = 12; Tariff[1, 4] = 24; Tariff[1, 5] = 3;
-                Tariff[2, 1] = 5; Tariff[2, 2] = 2; Tariff[2, 3] = 19; Tariff[2, 4] = 27; Tariff[2, 5] = 2;
-                Tariff[3, 1] = 29; Tariff[3, 2] = 23; Tariff[3, 3] = 25; Tariff[3, 4] = 16; Tariff[3, 5] = 8;
-                Tariff[4, 1] = 2; Tariff[4, 2] = 25; Tariff[4, 3] = 14; Tariff[4, 4] = 15; Tariff[4, 5] = 21;
                 int n, end;
                 do
                 {
