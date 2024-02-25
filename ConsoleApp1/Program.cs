@@ -609,51 +609,42 @@ namespace ConsoleApp1
         {
             try
             {
-                int N, M;
                 Console.WriteLine("Данная программа решает закрытые транспортные задачи.");
-                Console.WriteLine("Введите количество склада:");
-                N = Convert.ToInt32(Console.ReadLine()) + 1;
-                Console.WriteLine("Введите количество потреблений:");
-                M = Convert.ToInt32(Console.ReadLine()) + 1;
-                //int[,] Tariff =
-                //    {{ 0, 13, 5, 13, 12, 13},
-                //    { 14, 16, 26, 12, 24, 3},
-                //    { 14, 5, 2, 19, 27, 2},
-                //    { 14, 29, 23, 25, 16, 8},
-                //    { 14, 2, 25, 14, 15, 21}};
-
-                //int[,] Tariff =
-                //    {{ 0, 27, 25, 30, 35, 23},
-                //    { 40, 70, 85, 55, 120, 120},
-                //    { 40, 110, 90, 75, 110, 120},
-                //    { 60, 115, 115, 70, 90, 120}};
-
-                int[,] Tariff =
-                    {{ 0, 27, 25, 30, 35, 23},
-                    { 40, 70, 85, 55, 120, 120},
-                    { 40, 110, 90, 75, 110, 120},
-                    { 60, 135, 95, 80, 75, 120}};
-
-                //int[,] Tariff = new int[N, M];
-                //Ввод
-                //Console.WriteLine("Введите склад:");  //Строки
-                //for (int i = 1; i < Tariff.GetLength(1); i++)
-                //{
-                //    Tariff[0, i] = Convert.ToInt32(Console.ReadLine());
-                //}
-                //Console.WriteLine("Введите потребления:"); //Столбцы
-                //for (int i = 1; i < Tariff.GetLength(0); i++)
-                //{
-                //    Tariff[i, 0] = Convert.ToInt32(Console.ReadLine());
-                //}
-                //Console.WriteLine("Введите тарифы:");
-                //for (int i = 1; i < Tariff.GetLength(0); i++)
-                //{
-                //    for (int j = 1; j < Tariff.GetLength(1); j++)
-                //    {
-                //        Tariff[i, j] = Convert.ToInt32(Console.ReadLine());
-                //    }
-                //}
+                //Красивый ввод
+                Console.WriteLine("Введите поставки через пробел:");
+                string buffer1 = Console.ReadLine();
+                int N = buffer1.Split(" ").Length; //определяем количество элементов
+                int[] temp1 = new int[N]; //создаем временный массив под количество элементов
+                temp1 = buffer1.Split(" ").Select(int.Parse).ToArray(); //Переводим в массив int               
+                Console.WriteLine("Введите потребителей через пробел:");
+                string buffer2 = Console.ReadLine();
+                int M = buffer2.Split(" ").Length; //определяем количество элементов
+                int[] temp2 = new int[M]; //создаем временный массив под количество элементов
+                temp2 = buffer2.Split(" ").Select(int.Parse).ToArray(); //Переводим в массив int             
+                //Заполняем поставки и потребителей
+                int[,] Tariff = new int[N+1,M+1];
+                for (int i = 1, t = 0; i < Tariff.GetLength(0); i++, t++)
+                {
+                    Tariff[i, 0] = temp1[t];
+                }
+                for (int j = 1, t = 0; j < Tariff.GetLength(1); j++, t++)
+                {
+                    Tariff[0, j] = temp2[t];
+                }
+                //Заполняем тарифы
+                string str;
+                int[] temp;
+                Console.WriteLine($"Введите матрицу тарифов:");
+                for (int i = 1; i < Tariff.GetLength(0); i++)
+                {
+                    str = Console.ReadLine();
+                    temp = new int[str.Split(" ").Length];
+                    temp = str.Split(" ").Select(int.Parse).ToArray();
+                    for (int j = 1, t = 0; j < Tariff.GetLength(1); j++, t++)
+                    {
+                        Tariff[i, j] = temp[t];
+                    }
+                }
                 int n, end;
                 do
                 {
