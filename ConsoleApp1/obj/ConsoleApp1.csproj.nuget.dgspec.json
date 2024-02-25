@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "D:\\otter\\VSProject\\d\\ConsoleApp1\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "D:\\otter\\VSProject\\d\\ConsoleApp1\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "D:\\otter\\VSProject\\d\\ConsoleApp1\\ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectPath": "D:\\otter\\VSProject\\d\\ConsoleApp1\\ConsoleApp1.csproj",
         "packagesPath": "C:\\Users\\Aziraphale\\.nuget\\packages\\",
-        "outputPath": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\obj\\",
+        "outputPath": "D:\\otter\\VSProject\\d\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\need_programms\\Visual Studio\\Shared\\NuGetPackages"

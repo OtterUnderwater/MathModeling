@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PlgssEKwIt7LTJ8k8PO3eh83uUzR+CrEkNbUpjPXgKQaggD40fejo3CIm8ywEc4GKt2HX+qZCvlJdhDwBxNzEw==",
+  "dgSpecHash": "LA0vpYHZuEJP3bv0rEP5zfnsmzHqGDoJ9p5AHWykLshL6f639hTT/7PjDtDGmFxG0WIP0dId7y+5dYB7I1+UWw==",
   "success": true,
-  "projectFilePath": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
+  "projectFilePath": "D:\\otter\\VSProject\\d\\ConsoleApp1\\ConsoleApp1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512",
     "C:\\Users\\Aziraphale\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.15\\microsoft.netcore.app.ref.7.0.15.nupkg.sha512",

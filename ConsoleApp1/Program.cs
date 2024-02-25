@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading;
@@ -65,33 +66,60 @@ namespace ConsoleApp1
         static void PrintPlan(int[,] Plan, int[,] Arr)
         {
             Console.WriteLine("Тарифый план:");
+            int n = 1 + 6 * Plan.GetLength(1); //сколько нужно тире
+            string str = new string('-', n);
+            Console.WriteLine("+" + str + "+"); //верхняя рамка таблицы
             for (int i = 0; i < Plan.GetLength(0); i++)
             {
                 for (int j = 0; j < Plan.GetLength(1); j++)
                 {
-                    if (i == 0 || j == 0)
+                    if (i == 1 && j == 0)
                     {
-                        Console.Write(Arr[i, j] + " \t");
+                        Console.WriteLine("+" + str + "+"); //рамка, ограничивающая 1ю строку
+                    }
+                    if (j == 0)
+                    {
+                        Console.Write("|{0,6}|", Arr[i, j]); //первый столбец с 2х сторон окружен "|"
+                    }
+                    else if (i == 0)
+                    {
+                        Console.Write("{0,6}", Arr[i, j]); //первая строка с 2х сторона окружен "|"
                     }
                     else
                     {
-                        Console.Write(Plan[i, j] + " \t");
+                        Console.Write("{0,6}", Plan[i, j]);
                     }
                 }
-                Console.WriteLine();
+                Console.WriteLine("|"); //переход на следующую строку
             }
+            Console.WriteLine("+" + str + "+"); //нижняя рамка таблицы
         }
         static void PrintTariff(int[,] Tariff)
         {
             Console.WriteLine("Тарифы:");
+            int n = 1 + 6 * Tariff.GetLength(1); //сколько нужно тире
+            string str = new string('-', n);
+            Console.WriteLine("+" + str + "+"); //верхняя рамка таблицы
             for (int i = 0; i < Tariff.GetLength(0); i++)
             {
                 for (int j = 0; j < Tariff.GetLength(1); j++)
                 {
-                    Console.Write(Tariff[i, j] + " \t");
+                    if (i == 1 && j == 0)
+                    {
+                        Console.WriteLine("+" + str + "+"); //рамка, ограничивающая 1ю строку
+                    }
+                    if (j == 0)
+                    {
+                        Console.Write("|{0,6}|", Tariff[i, j]); //первый столбец с 2х сторон окружен "|"
+                    }
+                    else
+                    {
+                        Console.Write("{0,6}", Tariff[i, j]);
+                    }
                 }
-                Console.WriteLine();
+                Console.WriteLine("|"); //переход на следующую строку
             }
+            Console.WriteLine("+" + str + "+"); //нижняя рамка таблицы
         }
         static void OutputAnswer(int[,] Plan, int[,] Tariff)
         {

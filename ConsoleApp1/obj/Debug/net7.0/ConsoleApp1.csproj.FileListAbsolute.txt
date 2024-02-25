@@ -56,3 +56,17 @@ D:\otter\VSProject\AlgorithmsPlan\ConsoleApp1\obj\Debug\net7.0\ref\ConsoleApp1.d
 \\main\RDP\33П\токареваэо\Desktop\p\AlgorithmsPlan\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.pdb
 \\main\RDP\33П\токареваэо\Desktop\p\AlgorithmsPlan\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.genruntimeconfig.cache
 \\main\RDP\33П\токареваэо\Desktop\p\AlgorithmsPlan\ConsoleApp1\obj\Debug\net7.0\ref\ConsoleApp1.dll
+D:\otter\VSProject\d\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.exe
+D:\otter\VSProject\d\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.deps.json
+D:\otter\VSProject\d\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.runtimeconfig.json
+D:\otter\VSProject\d\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.dll
+D:\otter\VSProject\d\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.pdb
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.AssemblyInfoInputs.cache
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.AssemblyInfo.cs
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.csproj.CoreCompileInputs.cache
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.dll
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\refint\ConsoleApp1.dll
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.pdb
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.genruntimeconfig.cache
+D:\otter\VSProject\d\ConsoleApp1\obj\Debug\net7.0\ref\ConsoleApp1.dll
