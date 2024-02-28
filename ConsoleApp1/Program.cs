@@ -16,6 +16,7 @@ namespace ConsoleApp1
     {    
         static void Main()
         {
+            Metods metod = new Metods();
             try
             {
                 Console.WriteLine("Данная программа решает закрытые транспортные задачи.");
@@ -65,10 +66,10 @@ namespace ConsoleApp1
                     n = Convert.ToInt32(Console.ReadLine());
                     switch (n)
                     {
-                        case 1: Metods.Metod1(Tariff); break;
-                        case 2: Metods.Metod2(Tariff); break;
-                        case 3: Metods.Metod3(Tariff); break;
-                        case 4: Metods.Metod4(Tariff); break;
+                        case 1: metod.Metod1(Tariff); break;
+                        case 2: metod.Metod2(Tariff); break;
+                        case 3: metod.Metod3(Tariff); break;
+                        case 4: metod.Metod4(Tariff); break;
                         default: Console.WriteLine("Такого метода нет"); break;
                     }
                     Console.WriteLine("Вы хотите выбрать другой метод? (1 - да, 0 - нет).");

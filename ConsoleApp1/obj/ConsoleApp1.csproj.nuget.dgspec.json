@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
-        "packagesPath": "C:\\Users\\Aziraphale\\.nuget\\packages\\",
-        "outputPath": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\obj\\",
+        "projectPath": "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
+        "packagesPath": "C:\\Users\\токареваэо\\.nuget\\packages\\",
+        "outputPath": "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\AlgorithmsPlan\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "D:\\need_programms\\Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Aziraphale\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\токареваэо\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -64,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }

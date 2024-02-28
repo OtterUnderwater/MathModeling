@@ -10,7 +10,7 @@ namespace ConsoleApp1
 {
     internal class Metods
     {
-        static bool Closed(int[,] Array)
+        bool Closed(int[,] Array)
         {
             int SumRow = 0;
             int SumColumn = 0;
@@ -32,7 +32,7 @@ namespace ConsoleApp1
                 return false;
             }
         }
-        static int Max(int[,] Array)
+        int Max(int[,] Array)
         {
             int max = Array[1, 1];
             for (int i = 1; i < Array.GetLength(0); i++)
@@ -47,7 +47,7 @@ namespace ConsoleApp1
             }
             return max;
         }
-        static int AllCheck(int[,] Check)
+        int AllCheck(int[,] Check)
         {
             int SumCheck = 0;
             for (int i = 1; i < Check.GetLength(0); i++)
@@ -59,7 +59,7 @@ namespace ConsoleApp1
             }
             return SumCheck;
         }
-        static void PrintPlan(int[,] Plan, int[,] Arr)
+        void PrintPlan(int[,] Plan, int[,] Arr)
         {
             Console.WriteLine("Тарифый план:");
             int n = 1 + 6 * Plan.GetLength(1); //сколько нужно тире
@@ -90,7 +90,7 @@ namespace ConsoleApp1
             }
             Console.WriteLine("+" + str + "+"); //нижняя рамка таблицы
         }
-        static void PrintTariff(int[,] Tariff)
+        void PrintTariff(int[,] Tariff)
         {
             Console.WriteLine("Тарифы:");
             int n = 1 + 6 * Tariff.GetLength(1); //сколько нужно тире
@@ -117,7 +117,7 @@ namespace ConsoleApp1
             }
             Console.WriteLine("+" + str + "+"); //нижняя рамка таблицы
         }
-        static void OutputAnswer(int[,] Plan, int[,] Tariff)
+        void OutputAnswer(int[,] Plan, int[,] Tariff)
         {
             int V = (Tariff.GetLength(0) - 1) + (Tariff.GetLength(1) - 1) - 1; //Вырожденность
             int countV = 0; //Проверка на вырожденность
@@ -143,7 +143,7 @@ namespace ConsoleApp1
                 Console.WriteLine("Задача вырожденная!");
             }
         }
-        public static void Metod1(int[,] Arr)
+        public void Metod1(int[,] Arr)
         {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
@@ -189,7 +189,7 @@ namespace ConsoleApp1
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
-        public static void Metod2(int[,] Arr)
+        public void Metod2(int[,] Arr)
         {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
@@ -248,7 +248,7 @@ namespace ConsoleApp1
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность    
             }
         }
-        public static void Metod3(int[,] Arr)
+        public void Metod3(int[,] Arr)
         {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
@@ -364,7 +364,7 @@ namespace ConsoleApp1
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
             }
         }
-        public static void Metod4(int[,] Arr)
+        public void Metod4(int[,] Arr)
         {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
