@@ -5,12 +5,26 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ConsoleApp1
 {
-    internal class Metods
+    public class Methods
     {
-        bool Closed(int[,] Array)
+        int[,] referencePlan;
+        int[,] tariff;
+        public Methods(int[,] tariff)
+        {
+            this.tariff = new int[tariff.GetLength(0), tariff.GetLength(1)];
+            this.tariff = tariff;
+        }
+
+        /// <summary>
+        /// Проверка на открытость задачи
+        /// </summary>
+        /// <param name="Array">Введенные тарифы</param>
+        /// <returns> "true" если задача закрытая </returns>
+        bool CheckClosed(int[,] Array)
         {
             int SumRow = 0;
             int SumColumn = 0;
@@ -32,7 +46,13 @@ namespace ConsoleApp1
                 return false;
             }
         }
-        int Max(int[,] Array)
+
+        /// <summary>
+        /// Поиск максимального элемента массива
+        /// </summary>
+        /// <param name="Array">Изменяющийся массив тарифов</param>
+        /// <returns>Максимальный элемент</returns>
+        int FindMaxEl(int[,] Array)
         {
             int max = Array[1, 1];
             for (int i = 1; i < Array.GetLength(0); i++)
@@ -47,6 +67,12 @@ namespace ConsoleApp1
             }
             return max;
         }
+
+        /// <summary>
+        /// Проверка что все ячейки заполнены
+        /// </summary>
+        /// <param name="Check">Массив проверки</param>
+        /// <returns>Количество заполненных ячеек</returns>
         int AllCheck(int[,] Check)
         {
             int SumCheck = 0;
@@ -59,9 +85,16 @@ namespace ConsoleApp1
             }
             return SumCheck;
         }
-        void PrintPlan(int[,] Plan, int[,] Arr)
+
+        /// <summary>
+        /// Красивый вывод и присваивание значения массиву referencePlan (опорный план)
+        /// </summary>
+        /// <param name="Plan">Опорный план</param>
+        /// <param name="Arr">Потребители и Склады</param>
+        void PrintReferencePlan(int[,] Plan, int[,] Arr)
         {
-            Console.WriteLine("Тарифый план:");
+            referencePlan = new int[Plan.GetLength(0), Plan.GetLength(1)];
+            Console.WriteLine("Опорный план:");
             int n = 1 + 6 * Plan.GetLength(1); //сколько нужно тире
             string str = new string('-', n);
             Console.WriteLine("+" + str + "+"); //верхняя рамка таблицы
@@ -76,20 +109,28 @@ namespace ConsoleApp1
                     if (j == 0)
                     {
                         Console.Write("|{0,6}|", Arr[i, j]); //первый столбец с 2х сторон окружен "|"
+                        referencePlan[i, j] = Arr[i, j];
                     }
                     else if (i == 0)
                     {
                         Console.Write("{0,6}", Arr[i, j]); //первая строка с 2х сторона окружен "|"
+                        referencePlan[i, j] = Arr[i, j];
                     }
                     else
                     {
                         Console.Write("{0,6}", Plan[i, j]);
+                        referencePlan[i, j] = Plan[i, j];
                     }
                 }
                 Console.WriteLine("|"); //переход на следующую строку
             }
             Console.WriteLine("+" + str + "+"); //нижняя рамка таблицы
         }
+
+        /// <summary>
+        /// Вывод матрицы тарифов и потребителей, складов
+        /// </summary>
+        /// <param name="Tariff">Введенные пользователем тарифы</param>
         void PrintTariff(int[,] Tariff)
         {
             Console.WriteLine("Тарифы:");
@@ -117,6 +158,12 @@ namespace ConsoleApp1
             }
             Console.WriteLine("+" + str + "+"); //нижняя рамка таблицы
         }
+
+        /// <summary>
+        /// Вывод проверки на вырожденность и подсчет целевой функции
+        /// </summary>
+        /// <param name="Plan">Опорный план</param>
+        /// <param name="Tariff">Тарифы</param>
         void OutputAnswer(int[,] Plan, int[,] Tariff)
         {
             int V = (Tariff.GetLength(0) - 1) + (Tariff.GetLength(1) - 1) - 1; //Вырожденность
@@ -143,7 +190,12 @@ namespace ConsoleApp1
                 Console.WriteLine("Задача вырожденная!");
             }
         }
-        public void Metod1(int[,] Arr)
+
+        /// <summary>
+        /// Метод северно-западного угла
+        /// </summary>
+        /// <param name="Arr"></param>
+        public void MNorthwestCorner(int[,] Arr)
         {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
@@ -154,7 +206,7 @@ namespace ConsoleApp1
             int[,] Tariff = new int[N, M];
             Array.Copy(Arr, Tariff, Arr.Length);
             //Подсчет тарифного плана
-            if (Closed(Tariff))
+            if (CheckClosed(Tariff))
             {
                 PrintTariff(Tariff);
                 while (SumCheck < (N - 1) * (M - 1))
@@ -185,11 +237,17 @@ namespace ConsoleApp1
                     //Проверка на количество заполненных элементов
                     SumCheck = AllCheck(Check);
                 }
-                PrintPlan(Plan, Arr); //Вывод тарифного плана
+                PrintReferencePlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
+                СheckingOptimality(); //Проверка на оптимальность
             }
         }
-        public void Metod2(int[,] Arr)
+
+        /// <summary>
+        /// Метод минимальной стоимости
+        /// </summary>
+        /// <param name="Arr"></param>
+        public void MMinimumCost(int[,] Arr)
         {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
@@ -200,13 +258,13 @@ namespace ConsoleApp1
             int[,] Tariff = new int[N, M];
             Array.Copy(Arr, Tariff, Arr.Length);
             //Подсчет тарифного плана
-            if (Closed(Tariff))
+            if (CheckClosed(Tariff))
             {
                 PrintTariff(Tariff);
                 while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Поиск минимального элемента
-                    int minEl = Max(Tariff);
+                    int minEl = FindMaxEl(Tariff);
                     for (int i = 1; i < Tariff.GetLength(0); i++)
                     {
                         for (int j = 1; j < Tariff.GetLength(1); j++)
@@ -244,11 +302,17 @@ namespace ConsoleApp1
                     //Проверка на количество заполненных элементов
                     SumCheck = AllCheck(Check);
                 }
-                PrintPlan(Plan, Arr); //Вывод тарифного плана
+                PrintReferencePlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность    
+                СheckingOptimality(); //Проверка на оптимальность
             }
         }
-        public void Metod3(int[,] Arr)
+
+        /// <summary>
+        /// Метод двойного предпочтения
+        /// </summary>
+        /// <param name="Arr"></param>
+        public void MDoublePreference(int[,] Arr)
         {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
@@ -261,7 +325,7 @@ namespace ConsoleApp1
             int[,] Tariff = new int[N, M];
             Array.Copy(Arr, Tariff, Arr.Length);
             //Подсчет тарифного плана
-            if (Closed(Tariff))
+            if (CheckClosed(Tariff))
             {
                 PrintTariff(Tariff);
                 //Двойное предпочтение
@@ -308,7 +372,7 @@ namespace ConsoleApp1
                 //Заполняем ячейку тарифом (Начиная с максимального предпочтения, пока оно не закончится)
                 while (Preference >= 0)
                 {
-                    int minEl = Max(Tariff);
+                    int minEl = FindMaxEl(Tariff);
                     for (int i = 1; i < Tariff.GetLength(0); i++)
                     {
                         for (int j = 1; j < Tariff.GetLength(1); j++)
@@ -360,11 +424,17 @@ namespace ConsoleApp1
                         Preference--;
                     }
                 }
-                PrintPlan(Plan, Arr); //Вывод тарифного плана
+                PrintReferencePlan(Plan, Arr); //Вывод тарифного плана
                 OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
+                СheckingOptimality(); //Проверка на оптимальность
             }
         }
-        public void Metod4(int[,] Arr)
+
+        /// <summary>
+        /// Метод аппроксимации Фогеля
+        /// </summary>
+        /// <param name="Arr"></param>
+        public void MFogelApproximations(int[,] Arr)
         {
             int N = Arr.GetLength(0);
             int M = Arr.GetLength(1);
@@ -385,7 +455,7 @@ namespace ConsoleApp1
                 }
             }
             //Подсчет тарифного плана
-            if (Closed(Tariff))
+            if (CheckClosed(Tariff))
             {
                 PrintTariff(Arr);
                 while (SumCheck < (N - 1) * (M - 1))
@@ -393,7 +463,7 @@ namespace ConsoleApp1
                     //Считаем штрафы по строкам в доп.столбец тарифов
                     for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
                     {
-                        MinEl1 = MinEl2 = Max(Tariff);
+                        MinEl1 = MinEl2 = FindMaxEl(Tariff);
                         countMin2 = 0;
                         for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
                         {
@@ -418,7 +488,7 @@ namespace ConsoleApp1
                         else
                         {
                             //Проверка пересчета штрафа
-                            if (MinEl2 == Max(Tariff))
+                            if (MinEl2 == FindMaxEl(Tariff))
                             {
                                 if (countMin2 == 1)
                                 {
@@ -441,7 +511,7 @@ namespace ConsoleApp1
                     //Считаем штрафы по столбцам в доп. строку тарифов
                     for (int j = 1; j < Tariff.GetLength(1) - 1; j++)
                     {
-                        MinEl1 = MinEl2 = Max(Tariff);
+                        MinEl1 = MinEl2 = FindMaxEl(Tariff);
                         countMin2 = 0;
                         for (int i = 1; i < Tariff.GetLength(0) - 1; i++)
                         {
@@ -466,7 +536,7 @@ namespace ConsoleApp1
                         else
                         {
                             //Проверка пересчета штрафа
-                            if (MinEl2 == Max(Tariff))
+                            if (MinEl2 == FindMaxEl(Tariff))
                             {
                                 if (countMin2 == 1)
                                 {
@@ -509,7 +579,7 @@ namespace ConsoleApp1
                         }
                     }
                     //Заполняем ячейки тарифом
-                    MinEl = Max(Tariff);
+                    MinEl = FindMaxEl(Tariff);
                     if (What == 0)
                     {
                         //Находим минимальный элемент в строке, где макс штраф
@@ -625,9 +695,108 @@ namespace ConsoleApp1
                         newTariff[i, j] = Tariff[i, j];
                     }
                 }
-                PrintPlan(Plan, Arr); //Вывод тарифного плана
-                OutputAnswer(Plan, newTariff); //Вывод целевой функции и проверка на вырожденность   
+                PrintReferencePlan(Plan, Arr); //Вывод тарифного плана
+                OutputAnswer(Plan, newTariff); //Вывод целевой функции и проверка на вырожденность
+                СheckingOptimality(); //Проверка на оптимальность
             }
+        }
+
+        /// <summary>
+        /// Проверка плана на оптимальность
+        /// </summary>
+        public void СheckingOptimality()
+        {
+            int answer;
+            Console.WriteLine("Вы желаете проверить план на оптимальность?");
+            Console.Write("1 - да, 0 - нет: ");
+            answer = Convert.ToInt32(Console.ReadLine());
+            if (answer == 1)
+            {
+                MPotentials();
+            }
+        }
+
+        public void MPotentials()
+        {
+            //потенциалы по строкам ui
+            int[] u = new int[referencePlan.GetLength(0) - 1];
+            bool[] checU = new bool[u.GetLength(0)];
+            //потенциалы по столбцам vj
+            int[] v = new int[referencePlan.GetLength(1) - 1];
+            bool[] checV = new bool[v.GetLength(1)];
+
+            checU[0] = true; //Так как u[0] = 0;
+
+            //Работает пока встречается хотя бы одна незаполненная ячейка
+            while (checU.Any(x => x == false))
+            {
+
+            }
+            for (int i = 0; i < referencePlan.GetLength(0); i++)
+            {
+                for (int j = 0; j < referencePlan.GetLength(1); j++)
+                {
+                    Console.Write("{0,6} ", referencePlan[i, j]);
+                }
+                Console.WriteLine(); //переход на следующую строку
+            }
+
+            for (int i = 0; i < referencePlan.GetLength(0); i++)
+            {
+                for (int j = 0; j < referencePlan.GetLength(1); j++)
+                {
+                    Console.Write("{0,6} ", referencePlan[i, j]);
+                }
+                Console.WriteLine(); //переход на следующую строку
+            }
+            for (int i = 0; i < tariff.GetLength(0); i++)
+            {
+                for (int j = 0; j < tariff.GetLength(1); j++)
+                {
+                    Console.Write("{0,6} ", tariff[i, j]);
+                }
+                Console.WriteLine(); //переход на следующую строку
+            }
+
+            //Подсчитываете потенциалы занятых ячеек, результаты должны быть выведены на экран
+            //EvaluationFreeCells(u, v);         
+        }
+
+        /// <summary>
+        /// Оценка свободных ячеек и вывод о оптимальности плана
+        /// </summary>
+        /// <param name="u"></param>
+        /// <param name="v"></param>
+        public void EvaluationFreeCells(int[] u, int[] v)
+        {
+            int n = 0; //Размер delta
+            int[] delta = new int[n];
+            int[] indexI = new int[n];
+            int[] indexJ = new int[n];
+            for (int i = 0; i < tariff.GetLength(0); i++)
+            {
+                for (int j = 0; j < tariff.GetLength(1); j++)
+                {
+                    if (tariff[i, j] == 0)
+                    {
+                        Array.Resize(ref delta, delta.Length + 1);
+                        Array.Resize(ref indexI, indexI.Length + 1);
+                        Array.Resize(ref indexJ, indexJ.Length + 1);
+                        delta[n] = u[i] + v[j] - tariff[i, j];
+                        indexI[n] = i;
+                        indexJ[n] = j;
+                        n++;
+                    }
+                }
+            }
+            Console.WriteLine("Оценка свободных ячеек:");
+            for (int i = 0; i < delta.Length; i++)
+            {
+                Console.WriteLine($"Δ{indexI[i]}{indexJ[i]} = {delta[i]}");
+            }
+
+
+            //Вывод об оптимальности - неоптимальности опорного плана
         }
     }
 }
