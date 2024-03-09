@@ -13,6 +13,7 @@ namespace ConsoleApp1
     {
         int[,] referencePlan;
         int[,] tariff;
+
         public Methods(int[,] tariff)
         {
             this.tariff = new int[tariff.GetLength(0), tariff.GetLength(1)];
@@ -87,20 +88,63 @@ namespace ConsoleApp1
         }
 
         /// <summary>
-        /// Красивый вывод и присваивание значения массиву referencePlan (опорный план)
+        /// Устанавливает значения массиву referencePlan (опорный план)
         /// </summary>
         /// <param name="Plan">Опорный план</param>
         /// <param name="Arr">Потребители и Склады</param>
-        void PrintReferencePlan(int[,] Plan, int[,] Arr)
+        void SetReferencePlan(int[,] Plan)
         {
             referencePlan = new int[Plan.GetLength(0), Plan.GetLength(1)];
-            Console.WriteLine("Опорный план:");
-            int n = 1 + 6 * Plan.GetLength(1); //сколько нужно тире
-            string str = new string('-', n);
-            Console.WriteLine("+" + str + "+"); //верхняя рамка таблицы
             for (int i = 0; i < Plan.GetLength(0); i++)
             {
                 for (int j = 0; j < Plan.GetLength(1); j++)
+                {
+                    if (j == 0 || i == 0)
+                    {
+                        referencePlan[i, j] = tariff[i, j];
+                    }
+                    else
+                    {
+                        referencePlan[i, j] = Plan[i, j];
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Изменяет значение массиву referencePlan (опорный план)
+        /// </summary>
+        void InputReferencePlan()
+        {
+            Console.WriteLine();
+            string str;
+            int[] temp;
+            PrintArray(tariff);
+            Console.WriteLine("Введите перераспределенный опорный план:");
+            for (int i = 1; i < referencePlan.GetLength(0); i++)
+            {
+                str = Console.ReadLine();
+                temp = new int[str.Split(" ").Length];
+                temp = str.Split(" ").Select(int.Parse).ToArray();
+                for (int j = 1, t = 0; j < referencePlan.GetLength(1); j++, t++)
+                {
+                    referencePlan[i, j] = temp[t];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Красивый вывод матрицы тарифов и опорного плана
+        /// </summary>
+        /// <param name="arrayNum">Введенные пользователем тарифы или опорный план</param>
+        void PrintArray(int[,] arrayNum)
+        {
+            int n = 1 + 6 * arrayNum.GetLength(1); //сколько нужно тире
+            string str = new string('-', n);
+            Console.WriteLine("+" + str + "+"); //верхняя рамка таблицы
+            for (int i = 0; i < arrayNum.GetLength(0); i++)
+            {
+                for (int j = 0; j < arrayNum.GetLength(1); j++)
                 {
                     if (i == 1 && j == 0)
                     {
@@ -108,55 +152,76 @@ namespace ConsoleApp1
                     }
                     if (j == 0)
                     {
-                        referencePlan[i, j] = Arr[i, j];
-                        Console.Write("|{0,6}|", referencePlan[i, j]); //1 столбец с 2х сторон окружен "|"
-                    }
-                    else if (i == 0)
-                    {
-                        referencePlan[i, j] = Arr[i, j];
-                        Console.Write("{0,6}", referencePlan[i, j]); //1 строка с 2х сторона окружен "|"
+                        Console.Write("|{0,6}|", arrayNum[i, j]); //первый столбец с 2х сторон окружен "|"
                     }
                     else
                     {
-                        referencePlan[i, j] = Plan[i, j];
-                        Console.Write("{0,6}", referencePlan[i, j]);
+                        Console.Write("{0,6}", arrayNum[i, j]);
                     }
                 }
                 Console.WriteLine("|"); //переход на следующую строку
             }
             Console.WriteLine("+" + str + "+"); //нижняя рамка таблицы
         }
-
+      
         /// <summary>
-        /// Вывод матрицы тарифов и потребителей, складов
+        ///  Красивый вывод чисто для метода потенциалов
         /// </summary>
-        /// <param name="Tariff">Введенные пользователем тарифы</param>
-        void PrintTariff(int[,] Tariff)
+        /// <param name="plan"></param>
+        /// <param name="v"></param>
+        /// <param name="u"></param>
+        void PrintPotentials(int[,] plan, int[] v, int[] u)
         {
-            Console.WriteLine("Тарифы:");
-            int n = 1 + 6 * Tariff.GetLength(1); //сколько нужно тире
-            string str = new string('-', n);
-            Console.WriteLine("+" + str + "+"); //верхняя рамка таблицы
-            for (int i = 0; i < Tariff.GetLength(0); i++)
+            int dash = 2 + 6 * (referencePlan.GetLength(1) + 1); //количество нужных тире
+            string str = new string('-', dash);
+            Console.WriteLine("+" + str + "+"); //выводим с "+"
+            for (int i = 0, i1 = 0; i <= referencePlan.GetLength(0); i++)
             {
-                for (int j = 0; j < Tariff.GetLength(1); j++)
+                for (int j = 0, j1 = 0; j <= referencePlan.GetLength(1); j++) //столбцы
                 {
-                    if (i == 1 && j == 0)
+                    if ((i == 1 && j == 0) || (i == referencePlan.GetLength(0) && j == 0))
                     {
-                        Console.WriteLine("+" + str + "+"); //рамка, ограничивающая 1ю строку
+                        Console.WriteLine("+" + str + "+");
                     }
-                    if (j == 0)
+                    if (i != referencePlan.GetLength(0) && j != referencePlan.GetLength(1))
                     {
-                        Console.Write("|{0,6}|", Tariff[i, j]); //первый столбец с 2х сторон окружен "|"
+                        if (j == 0)
+                        {
+                            Console.Write("|{0,6}|", referencePlan[i, j]);
+                        }
+                        else
+                        {
+                            Console.Write("{0,6}", referencePlan[i, j]);
+                        }
                     }
                     else
                     {
-                        Console.Write("{0,6}", Tariff[i, j]);
+                        if (j == 0 || i == 0 || (i == referencePlan.GetLength(0) && j == referencePlan.GetLength(1)))
+                        {
+                            Console.Write("|      |");
+                        }
+                        else
+                        {
+                            //последняя строка 
+                            if (j != referencePlan.GetLength(1) && i == referencePlan.GetLength(0))
+                            {
+                                Console.Write("{0,6}", v[j1]);
+                                j1++;
+
+                            }
+                            //последний столбец
+                            else if (i != referencePlan.GetLength(0) && j == referencePlan.GetLength(1))
+                            {
+
+                                Console.Write("|{0,6}|", u[i1]);
+                                i1++;
+                            }
+                        }
                     }
                 }
-                Console.WriteLine("|"); //переход на следующую строку
+                Console.WriteLine();
             }
-            Console.WriteLine("+" + str + "+"); //нижняя рамка таблицы
+            Console.WriteLine("+" + str + "+"); //типа нижняя рамка таблицы
         }
 
         /// <summary>
@@ -164,17 +229,17 @@ namespace ConsoleApp1
         /// </summary>
         /// <param name="Plan">Опорный план</param>
         /// <param name="Tariff">Тарифы</param>
-        void OutputAnswer(int[,] Plan, int[,] Tariff)
+        void OutputAnswer()
         {
-            int V = (Tariff.GetLength(0) - 1) + (Tariff.GetLength(1) - 1) - 1; //Вырожденность
+            int V = (tariff.GetLength(0) - 1) + (tariff.GetLength(1) - 1) - 1; //Вырожденность
             int countV = 0; //Проверка на вырожденность
             int L = 0; //Целевая функция  
-            for (int i = 1; i < Plan.GetLength(0); i++)
+            for (int i = 1; i < referencePlan.GetLength(0); i++)
             {
-                for (int j = 1; j < Plan.GetLength(1); j++)
+                for (int j = 1; j < referencePlan.GetLength(1); j++)
                 {
-                    L = L + (Plan[i, j] * Tariff[i, j]);
-                    if (Plan[i, j] != 0)
+                    L = L + (referencePlan[i, j] * tariff[i, j]);
+                    if (referencePlan[i, j] != 0)
                     {
                         countV++;
                     }
@@ -208,7 +273,8 @@ namespace ConsoleApp1
             //Подсчет тарифного плана
             if (CheckClosed(Tariff))
             {
-                PrintTariff(Tariff);
+                Console.WriteLine("Тарифы:");
+                PrintArray(tariff);
                 while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Заполняем ячейки тарифом
@@ -237,8 +303,10 @@ namespace ConsoleApp1
                     //Проверка на количество заполненных элементов
                     SumCheck = AllCheck(Check);
                 }
-                PrintReferencePlan(Plan, Arr); //Вывод тарифного плана
-                OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
+                SetReferencePlan(Plan);
+                Console.WriteLine("Опорный план:");
+                PrintArray(referencePlan); //Вывод тарифного плана
+                OutputAnswer(); //Вывод целевой функции и проверка на вырожденность   
                 СheckingOptimality(); //Проверка на оптимальность
             }
         }
@@ -260,7 +328,7 @@ namespace ConsoleApp1
             //Подсчет тарифного плана
             if (CheckClosed(Tariff))
             {
-                PrintTariff(Tariff);
+                PrintArray(tariff);
                 while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Поиск минимального элемента
@@ -302,8 +370,10 @@ namespace ConsoleApp1
                     //Проверка на количество заполненных элементов
                     SumCheck = AllCheck(Check);
                 }
-                PrintReferencePlan(Plan, Arr); //Вывод тарифного плана
-                OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность    
+                SetReferencePlan(Plan);
+                Console.WriteLine("Опорный план:");
+                PrintArray(referencePlan); //Вывод тарифного плана
+                OutputAnswer(); //Вывод целевой функции и проверка на вырожденность   
                 СheckingOptimality(); //Проверка на оптимальность
             }
         }
@@ -327,7 +397,7 @@ namespace ConsoleApp1
             //Подсчет тарифного плана
             if (CheckClosed(Tariff))
             {
-                PrintTariff(Tariff);
+                PrintArray(tariff);
                 //Двойное предпочтение
                 //Расставляем плюсы в предпочтении по строкам
                 for (int i = 1; i < Tariff.GetLength(0); i++)
@@ -424,8 +494,10 @@ namespace ConsoleApp1
                         Preference--;
                     }
                 }
-                PrintReferencePlan(Plan, Arr); //Вывод тарифного плана
-                OutputAnswer(Plan, Tariff); //Вывод целевой функции и проверка на вырожденность   
+                SetReferencePlan(Plan);
+                Console.WriteLine("Опорный план:");
+                PrintArray(referencePlan); //Вывод тарифного плана
+                OutputAnswer(); //Вывод целевой функции и проверка на вырожденность   
                 СheckingOptimality(); //Проверка на оптимальность
             }
         }
@@ -457,7 +529,7 @@ namespace ConsoleApp1
             //Подсчет тарифного плана
             if (CheckClosed(Tariff))
             {
-                PrintTariff(Arr);
+                PrintArray(tariff);
                 while (SumCheck < (N - 1) * (M - 1))
                 {
                     //Считаем штрафы по строкам в доп.столбец тарифов
@@ -695,8 +767,10 @@ namespace ConsoleApp1
                         newTariff[i, j] = Tariff[i, j];
                     }
                 }
-                PrintReferencePlan(Plan, Arr); //Вывод тарифного плана
-                OutputAnswer(Plan, newTariff); //Вывод целевой функции и проверка на вырожденность
+                SetReferencePlan(Plan);
+                Console.WriteLine("Опорный план:");
+                PrintArray(referencePlan); //Вывод тарифного плана
+                OutputAnswer(); //Вывод целевой функции и проверка на вырожденность   
                 СheckingOptimality(); //Проверка на оптимальность
             }
         }
@@ -716,6 +790,9 @@ namespace ConsoleApp1
             }
         }
 
+        /// <summary>
+        /// Метод потенциалов
+        /// </summary>
         public void MPotentials()
         {
             int[,] plan = new int[referencePlan.GetLength(0) - 1, referencePlan.GetLength(1) - 1];
@@ -750,7 +827,7 @@ namespace ConsoleApp1
             //Работает пока встречается хотя бы одна незаполненная ячейка
             while (checU.Any(x => x == false) || checV.Any(x => x == false))
             {
-            for (int i = 0; i < plan.GetLength(0); i++)
+                for (int i = 0; i < plan.GetLength(0); i++)
                 {
                     for (int j = 0; j < plan.GetLength(1); j++)
                     {
@@ -771,28 +848,7 @@ namespace ConsoleApp1
                 }
             }
             Console.WriteLine("Потенциалы занятых ячеек:");
-            for (int i = 0; i <= plan.GetLength(0); i++)
-            {
-                for (int j = 0; j <= plan.GetLength(1); j++)
-                {
-                    if (i != plan.GetLength(0) && j != plan.GetLength(1))
-                    {
-                        Console.Write("{0,6} ", plan[i, j]);
-                    }
-                    else
-                    {
-                        if (i == plan.GetLength(0) && j != plan.GetLength(1))
-                        {
-                            Console.Write("{0,6} ",v[j]);
-                        }
-                        else if (i != plan.GetLength(0) && j == plan.GetLength(1))
-                        {
-                            Console.Write("{0,6} ", u[i]);
-                        }
-                    }
-                }
-                Console.WriteLine();
-            }
+            PrintPotentials(plan, v, u);
             //Оценка свободных ячеек
             for (int i = 0; i < plan.GetLength(0); i++)
             {
@@ -813,13 +869,10 @@ namespace ConsoleApp1
             Console.WriteLine("Оценка свободных ячеек:");
             for (int i = 0; i < delta.Length; i++)
             {
-                Console.WriteLine($"дельта /\\ {indexI[i]}{indexJ[i]} = {delta[i]}");
-            }
-            for (int i = 0; i < delta.Length; i++)
-            {
+                Console.WriteLine($"Дельта({indexI[i]}{indexJ[i]}) = {delta[i]}");
                 if (delta[i] > 0)
                 {
-                    notOptimal = true; break;
+                    notOptimal = true;
                 }
             }
             //вести массив с перераспределенным опорным планом и определить,
@@ -838,27 +891,8 @@ namespace ConsoleApp1
             }
             else
             {
-                Console.WriteLine("План оптимальный"); 
+                Console.WriteLine("План оптимальный.");
             }
-        }
-
-        public void InputReferencePlan()
-        {
-            Console.WriteLine();
-            string str;
-            int[] temp;
-            PrintTariff(tariff);
-            Console.WriteLine("Введите перераспределенный опорный план:");
-            for (int i = 1; i < referencePlan.GetLength(0); i++)
-            {
-                str = Console.ReadLine();
-                temp = new int[str.Split(" ").Length];
-                temp = str.Split(" ").Select(int.Parse).ToArray();
-                for (int j = 1, t = 0; j < referencePlan.GetLength(1); j++, t++)
-                {
-                    referencePlan[i, j] = temp[t];
-                }
-            }     
         }
     }
 }
