@@ -43,7 +43,7 @@ namespace ConsoleApp1
                 //Заполняем тарифы
                 string str;
                 int[] temp;
-                Console.WriteLine($"Введите матрицу тарифов:");
+                Console.WriteLine("Введите матрицу тарифов:");
                 for (int i = 1; i < Tariff.GetLength(0); i++)
                 {
                     str = Console.ReadLine();
@@ -72,7 +72,7 @@ namespace ConsoleApp1
                         case 4: method.MFogelApproximations(Tariff); break;
                         default: Console.WriteLine("Такого метода нет"); break;
                     }
-                    Console.WriteLine("Вы хотите выбрать другой метод? (1 - да, 0 - нет).");
+                    Console.WriteLine("\nВы хотите выбрать другой метод? (1 - да, 0 - нет).");
                     end = Convert.ToInt32(Console.ReadLine());
                 } while (end > 0);
             }

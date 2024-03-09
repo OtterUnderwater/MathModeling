@@ -108,18 +108,18 @@ namespace ConsoleApp1
                     }
                     if (j == 0)
                     {
-                        Console.Write("|{0,6}|", Arr[i, j]); //первый столбец с 2х сторон окружен "|"
                         referencePlan[i, j] = Arr[i, j];
+                        Console.Write("|{0,6}|", referencePlan[i, j]); //1 столбец с 2х сторон окружен "|"
                     }
                     else if (i == 0)
                     {
-                        Console.Write("{0,6}", Arr[i, j]); //первая строка с 2х сторона окружен "|"
                         referencePlan[i, j] = Arr[i, j];
+                        Console.Write("{0,6}", referencePlan[i, j]); //1 строка с 2х сторона окружен "|"
                     }
                     else
                     {
-                        Console.Write("{0,6}", Plan[i, j]);
                         referencePlan[i, j] = Plan[i, j];
+                        Console.Write("{0,6}", referencePlan[i, j]);
                     }
                 }
                 Console.WriteLine("|"); //переход на следующую строку
@@ -718,71 +718,92 @@ namespace ConsoleApp1
 
         public void MPotentials()
         {
+            int[,] plan = new int[referencePlan.GetLength(0) - 1, referencePlan.GetLength(1) - 1];
+            int[,] c = new int[tariff.GetLength(0) - 1, tariff.GetLength(1) - 1];
             //потенциалы по строкам ui
-            int[] u = new int[referencePlan.GetLength(0) - 1];
-            bool[] checU = new bool[u.GetLength(0)];
+            int[] u = new int[plan.GetLength(0)];
+            bool[] checU = new bool[u.Length];
             //потенциалы по столбцам vj
-            int[] v = new int[referencePlan.GetLength(1) - 1];
-            bool[] checV = new bool[v.GetLength(1)];
-
+            int[] v = new int[plan.GetLength(1)];
+            bool[] checV = new bool[v.Length];
             checU[0] = true; //Так как u[0] = 0;
-
-            //Работает пока встречается хотя бы одна незаполненная ячейка
-            while (checU.Any(x => x == false))
-            {
-
-            }
-            for (int i = 0; i < referencePlan.GetLength(0); i++)
-            {
-                for (int j = 0; j < referencePlan.GetLength(1); j++)
-                {
-                    Console.Write("{0,6} ", referencePlan[i, j]);
-                }
-                Console.WriteLine(); //переход на следующую строку
-            }
-
-            for (int i = 0; i < referencePlan.GetLength(0); i++)
-            {
-                for (int j = 0; j < referencePlan.GetLength(1); j++)
-                {
-                    Console.Write("{0,6} ", referencePlan[i, j]);
-                }
-                Console.WriteLine(); //переход на следующую строку
-            }
-            for (int i = 0; i < tariff.GetLength(0); i++)
-            {
-                for (int j = 0; j < tariff.GetLength(1); j++)
-                {
-                    Console.Write("{0,6} ", tariff[i, j]);
-                }
-                Console.WriteLine(); //переход на следующую строку
-            }
-
-            //Подсчитываете потенциалы занятых ячеек, результаты должны быть выведены на экран
-            //EvaluationFreeCells(u, v);         
-        }
-
-        /// <summary>
-        /// Оценка свободных ячеек и вывод о оптимальности плана
-        /// </summary>
-        /// <param name="u"></param>
-        /// <param name="v"></param>
-        public void EvaluationFreeCells(int[] u, int[] v)
-        {
             int n = 0; //Размер delta
             int[] delta = new int[n];
             int[] indexI = new int[n];
             int[] indexJ = new int[n];
-            for (int i = 0; i < tariff.GetLength(0); i++)
+            bool notOptimal = false; //оптмальность плана
+            for (int i = 1, k = 0; i < referencePlan.GetLength(0); i++, k++)
             {
-                for (int j = 0; j < tariff.GetLength(1); j++)
+                for (int j = 1, m = 0; j < referencePlan.GetLength(1); j++, m++)
                 {
-                    if (tariff[i, j] == 0)
+                    plan[k, m] = referencePlan[i, j];
+                }
+            }
+            for (int i = 1, k = 0; i < tariff.GetLength(0); i++, k++)
+            {
+                for (int j = 1, m = 0; j < tariff.GetLength(1); j++, m++)
+                {
+                    c[k, m] = tariff[i, j];
+                }
+            }
+            //Оценка занятых ячеек
+            //Работает пока встречается хотя бы одна незаполненная ячейка
+            while (checU.Any(x => x == false) || checV.Any(x => x == false))
+            {
+            for (int i = 0; i < plan.GetLength(0); i++)
+                {
+                    for (int j = 0; j < plan.GetLength(1); j++)
+                    {
+                        //Проверяем что ячейка заполнена
+                        //Потенциалы по столбцам
+                        if (plan[i, j] != 0 && checU[i] == true && checV[j] == false)
+                        {
+                            v[j] = c[i, j] - u[i];
+                            checV[j] = true;
+                        }
+                        //Потенциалы по строкам
+                        if (plan[i, j] != 0 && checU[i] == false && checV[j] == true)
+                        {
+                            u[i] = c[i, j] - v[j];
+                            checU[i] = true;
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("Потенциалы занятых ячеек:");
+            for (int i = 0; i <= plan.GetLength(0); i++)
+            {
+                for (int j = 0; j <= plan.GetLength(1); j++)
+                {
+                    if (i != plan.GetLength(0) && j != plan.GetLength(1))
+                    {
+                        Console.Write("{0,6} ", plan[i, j]);
+                    }
+                    else
+                    {
+                        if (i == plan.GetLength(0) && j != plan.GetLength(1))
+                        {
+                            Console.Write("{0,6} ",v[j]);
+                        }
+                        else if (i != plan.GetLength(0) && j == plan.GetLength(1))
+                        {
+                            Console.Write("{0,6} ", u[i]);
+                        }
+                    }
+                }
+                Console.WriteLine();
+            }
+            //Оценка свободных ячеек
+            for (int i = 0; i < plan.GetLength(0); i++)
+            {
+                for (int j = 0; j < plan.GetLength(1); j++)
+                {
+                    if (plan[i, j] == 0)
                     {
                         Array.Resize(ref delta, delta.Length + 1);
                         Array.Resize(ref indexI, indexI.Length + 1);
                         Array.Resize(ref indexJ, indexJ.Length + 1);
-                        delta[n] = u[i] + v[j] - tariff[i, j];
+                        delta[n] = u[i] + v[j] - c[i, j];
                         indexI[n] = i;
                         indexJ[n] = j;
                         n++;
@@ -792,11 +813,52 @@ namespace ConsoleApp1
             Console.WriteLine("Оценка свободных ячеек:");
             for (int i = 0; i < delta.Length; i++)
             {
-                Console.WriteLine($"Δ{indexI[i]}{indexJ[i]} = {delta[i]}");
+                Console.WriteLine($"дельта /\\ {indexI[i]}{indexJ[i]} = {delta[i]}");
             }
+            for (int i = 0; i < delta.Length; i++)
+            {
+                if (delta[i] > 0)
+                {
+                    notOptimal = true; break;
+                }
+            }
+            //вести массив с перераспределенным опорным планом и определить,
+            //будет ли заново составленный опорный план оптимальным
+            if (notOptimal)
+            {
+                int answer;
+                Console.WriteLine("План неоптимальный. Хотите ввести перераспределенный опорный план?");
+                Console.Write("1 - да, 0 - нет: ");
+                answer = Convert.ToInt32(Console.ReadLine());
+                if (answer == 1)
+                {
+                    InputReferencePlan();
+                    MPotentials();
+                }
+            }
+            else
+            {
+                Console.WriteLine("План оптимальный"); 
+            }
+        }
 
-
-            //Вывод об оптимальности - неоптимальности опорного плана
+        public void InputReferencePlan()
+        {
+            Console.WriteLine();
+            string str;
+            int[] temp;
+            PrintTariff(tariff);
+            Console.WriteLine("Введите перераспределенный опорный план:");
+            for (int i = 1; i < referencePlan.GetLength(0); i++)
+            {
+                str = Console.ReadLine();
+                temp = new int[str.Split(" ").Length];
+                temp = str.Split(" ").Select(int.Parse).ToArray();
+                for (int j = 1, t = 0; j < referencePlan.GetLength(1); j++, t++)
+                {
+                    referencePlan[i, j] = temp[t];
+                }
+            }     
         }
     }
 }
