@@ -1,4 +1,5 @@
-# Mathematical modeling   
+# Mathematical modeling 
+Repository of works on MDK 02.03 Mathematical modeling:  
 1. Transportation tasks
 2. Drawing up reference plans
 3. The Simplex method
@@ -10,13 +11,13 @@
 4. Start the project
 
 ## Support
-If you have any difficulties or questions about using the package, create 
+If you have any difficulties or questions, create 
 [discussion](https://github.com/OtterUnderwater/AlgorithmsPlan/issues/new/choose) in this repository.
 
 ## Description of commits
 | Name     | Description                                          |
 | -------- | ---------------------------------------------------- |
-| docs     | update documentation (README)                        |
+| docs     | update documentation (readme)                        |
 | feat     | adding new functionality                             |
 | layout   | adding a new layout without functionality            |
 | style    | working with styles and design                       |
