@@ -6,7 +6,7 @@
 ## Installation
 1. Open Visual Studio
 2. Click "Clone Repository"
-3. Paste the link to the repository ```(https://github.com/OtterUnderwater/AlgorithmsPlan.git)```
+3. Paste the link to the repository
 4. Start the project
 
 ## Support
