@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectUniqueName": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj",
       "projectName": "ConsoleApp1",
-      "projectPath": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectPath": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj",
       "packagesPath": "C:\\Users\\Aziraphale\\.nuget\\packages\\",
-      "outputPath": "D:\\otter\\VSProject\\AlgorithmsPlan\\ConsoleApp1\\obj\\",
+      "outputPath": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\need_programms\\Visual Studio\\Shared\\NuGetPackages"
@@ -71,7 +71,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
