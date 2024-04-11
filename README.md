@@ -18,7 +18,8 @@ If you have any difficulties or questions about using the package, create
 | -------- | ---------------------------------------------------- |
 | docs     | update documentation (README)                        |
 | feat     | adding new functionality                             |
-| design   | adding a new interface without functionality         |
+| layout   | adding a new layout without functionality            |
+| style    | working with styles and design                       |
 | fix      | error correction                                     |
 | perf     | changes to improve the program                       |
 | refactor | code edits without changing errors or functionality  |
