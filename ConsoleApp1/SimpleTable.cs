@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleApp1
+﻿namespace ConsoleApp1
 {
 	class Znach
 	{
@@ -20,22 +13,27 @@ namespace ConsoleApp1
 
 	public class SimpleTable
 	{
-		decimal[,] STable;
+		decimal[,] sTable; //Симплекс-таблица
+		int countX; //Количество неизвестных в системе (искомые x)
 
-		public SimpleTable(decimal[,] STable)
+		public SimpleTable(decimal[,] STable, int countX)
 		{
-			this.STable = STable;
+			this.sTable = STable;
+			this.countX = countX;
 			Console.WriteLine("Симплекс-таблица:");
 			PrintSimpleTable();
 		}
 
+		/// <summary>
+		/// Вывод симплекс-таблицы
+		/// </summary>
 		public void PrintSimpleTable()
 		{
-			for (int i = 0; i < STable.GetLength(0); i++)
+			for (int i = 1; i < sTable.GetLength(0); i++)
 			{
-				for (int j = 0; j < STable.GetLength(1); j++)
+				for (int j = 1; j < sTable.GetLength(1); j++)
 				{
-					Console.Write("{0,6:0.0}", STable[i, j]);
+					Console.Write("{0,6:0.0}", sTable[i, j]);
 				}
 				Console.WriteLine();
 			}
@@ -46,35 +44,33 @@ namespace ConsoleApp1
 		/// </summary>
 		public void MaxObjectiveFunction()
 		{
-			List<decimal> deltaJ = new List<decimal>();
-			for (int j = 1; j < STable.GetLength(1) - 1; j++)
-			{
-				deltaJ.Add(STable[STable.GetLength(0) - 1, j]);
-			}
+			List<decimal> deltaJ = GetDeltaJ();
 			//Работает, пока в строке дельта j есть значения < 0
 			while (deltaJ.Any(x => x < 0))
 			{
 				// Определяем ведущий столбец
-				decimal minElem = STable[STable.GetLength(0) - 1, 1];
+				decimal minElem = sTable[sTable.GetLength(0) - 1, 1];
 				int indexColumn = 1;
 				int indexStroke = 0;
-				for (int j = 1; j < STable.GetLength(1) - 1; j++)
+				for (int j = 1; j < sTable.GetLength(1) - 1; j++)
 				{
-					if (STable[STable.GetLength(0) - 1, j] < minElem)
+					if (sTable[sTable.GetLength(0) - 1, j] < minElem)
 					{
-						minElem = STable[STable.GetLength(0) - 1, j];
+						minElem = sTable[sTable.GetLength(0) - 1, j];
 						indexColumn = j;
 					}
 				}
 				// Определяем ведущую строку
 				indexStroke = GetIndexStroke(indexColumn);
 				// Заменяем название базиса
-				STable[indexStroke, 0] = STable[0, indexColumn];
+				sTable[indexStroke, 0] = sTable[0, indexColumn];
 				// Вычисляем новую симплекс-таблицу методом Жордана-Гаусса
-
-				}
-			// Решение найдено
-			// Считаем L(x), а далее выводим знач базисов x1, x2...
+				MethodJordanGauss(indexStroke, indexColumn);
+				// Проверяем deltaJ
+				deltaJ = GetDeltaJ();
+			}
+			// Считаем L(x), а далее выводим значения базисов
+			PrintObjectiveFunction();
 		}
 
 		/// <summary>
@@ -82,32 +78,42 @@ namespace ConsoleApp1
 		/// </summary>
 		public void MinObjectiveFunction()
 		{
-			List<decimal> deltaJ = new List<decimal>();
-			for (int j = 1; j < STable.GetLength(1) - 1; j++)
-			{
-				deltaJ.Add(STable[STable.GetLength(0) - 1, j]);
-			}
-			//Работает, пока в строке дельта j есть значения > 0
+			List<decimal> deltaJ = GetDeltaJ();
+			//Работает, пока в строке дельта j есть значения < 0
 			while (deltaJ.Any(x => x > 0))
 			{
 				// Определяем ведущий столбец
-				decimal maxElem = STable[STable.GetLength(0) - 1, 1];
+				decimal maxElem = sTable[sTable.GetLength(0) - 1, 1];
 				int indexColumn = 1;
 				int indexStroke = 0;
-				for (int j = 1; j < STable.GetLength(1) - 1; j++)
+				for (int j = 1; j < sTable.GetLength(1) - 1; j++)
 				{
-					if (STable[STable.GetLength(0) - 1, j] > maxElem)
+					if (sTable[sTable.GetLength(0) - 1, j] > maxElem)
 					{
-						maxElem = STable[STable.GetLength(0) - 1, j];
+						maxElem = sTable[sTable.GetLength(0) - 1, j];
 						indexColumn = j;
 					}
 				}
 				indexStroke = GetIndexStroke(indexColumn);
-				// Определяем ведущую строку
-				indexStroke = GetIndexStroke(indexColumn);
-				// Заменяем название базиса
-				STable[indexStroke, 0] = STable[0, indexColumn];
+				sTable[indexStroke, 0] = sTable[0, indexColumn];
+				MethodJordanGauss(indexStroke, indexColumn);
+				deltaJ = GetDeltaJ();
 			}
+			PrintObjectiveFunction();
+		}
+
+		/// <summary>
+		/// Возвращает лист дельты J
+		/// </summary>
+		/// <returns></returns>
+		public List<decimal> GetDeltaJ()
+		{
+			List<decimal> deltaJ = new List<decimal>();
+			for (int j = 1; j < sTable.GetLength(1) - 1; j++)
+			{
+				deltaJ.Add(sTable[sTable.GetLength(0) - 1, j]);
+			}
+			return deltaJ;
 		}
 
 		/// <summary>
@@ -118,14 +124,22 @@ namespace ConsoleApp1
 		/// <returns></returns>
 		public int GetIndexStroke(int indexColumn)
 		{
-			List<Znach> result = new List<Znach>();
-			for (int i = 1; i < STable.GetLength(0) - 1; i++)
+			decimal L;
+			decimal leaderX;
+			decimal otb;
+			List<Znach> result = new List<Znach>(); // Хранит в себе индекс строки и значение результата
+			for (int i = 1; i < sTable.GetLength(0) - 1; i++)
 			{
-				decimal L = STable[i, STable.GetLength(1) - 1];
-				decimal leaderX = STable[i, indexColumn];
-				decimal otb = L / leaderX;
+				otb = 0;
+				L = sTable[i, sTable.GetLength(1) - 1];
+				leaderX = sTable[i, indexColumn];
+				if (leaderX != 0)
+				{
+					otb = L / leaderX;
+				}
 				if (otb > 0)
 				{
+					//Запись всех положительных значений в лист
 					result.Add(new Znach(i, otb));
 				}
 			}
@@ -134,6 +148,63 @@ namespace ConsoleApp1
 			return index;
 		}
 
-	}
+		/// <summary>
+		/// Использование метода Жордана-Гаусса на матрице
+		/// </summary>
+		public void MethodJordanGauss(int iLead, int jLead)
+		{
+			// Получаем в нужной строке 1 для ведущего элемента
+			// Делим всю строку на элемент
+			decimal xLead = sTable[iLead, jLead];
+			for (int j = 1; j < sTable.GetLength(1); j++)
+			{
+				sTable[iLead, j] = sTable[iLead, j] / xLead;
+			}
+			// Зануляем все остальные элементы в столбце
+			for (int i = 1; i < sTable.GetLength(0); i++)
+			{
+				//Ведущую строку больше не изменяем
+				if (i != iLead)
+				{
+					decimal elJLead = -sTable[i, jLead];
+					for (int j = 1; j < sTable.GetLength(1); j++)
+					{
+						sTable[i, j] = sTable[i, j] + (sTable[iLead, j] * elJLead);
+					}
+				}
+			}
+		}
 
+		/// <summary>
+		/// Вывод целевой функции и неизвестных
+		/// </summary>
+		public void PrintObjectiveFunction()
+		{
+			List<Znach> result = new List<Znach>();
+			//Проходимся по всему столбцу x и ищем неизвестные
+			for (int x = 1; x <= countX; x++)
+			{
+				for (int i = 1; i < sTable.GetLength(0) - 1; i++)
+				{
+					if (sTable[i, 0] == x)
+					{
+						result.Add(new Znach(x, sTable[i, sTable.GetLength(1) - 1]));
+						continue;
+					}
+				}
+			}
+			for (int i = 0; i < countX; i++)
+			{
+				if (result[i].Index == i+1)
+				{
+					Console.WriteLine("x{0} = {1:0.0}", i + 1, result[i].Value);
+				}
+				else
+				{
+					Console.WriteLine($"x{i + 1} = 0");
+				}
+			}
+			Console.WriteLine("L(x) = {0:0.00}", sTable[sTable.GetLength(0) - 1, sTable.GetLength(1) - 1]);
+		}
+	}
 }

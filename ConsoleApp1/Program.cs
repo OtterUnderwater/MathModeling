@@ -106,7 +106,7 @@ namespace ConsoleApp1
 		}
 		static void СallSimpleTable()
 		{
-			/*Console.WriteLine("Введите количество базисных переменных:");
+			Console.WriteLine("Введите количество базисных переменных:");
 			int countBasis = Convert.ToInt32(Console.ReadLine()); //базисные = стр уравнений
 			Console.WriteLine("Введите количество всех переменных:");
 			int countX = Convert.ToInt32(Console.ReadLine());
@@ -140,7 +140,7 @@ namespace ConsoleApp1
 					int N = buffer.Split(" ").Length;
 					decimal[] temp = new decimal[N];
 					temp = buffer.Split(" ").Select(decimal.Parse).ToArray();
-					for (int j = 0, t = 0; j < STable.GetLength(1); j++, t++)
+					for (int j = 1, t = 0; j < STable.GetLength(1); j++, t++)
 					{
 						if (t < N)
 						{
@@ -153,15 +153,7 @@ namespace ConsoleApp1
 					}
 				}
 			}
-*/
-			decimal[,] STable = {
-				{ 0, 1, 2, 3, 4, 5, 6},
-				{ 3, 1, 2, 1, 0, 0, 4},
-				{ 4, 1, 1, 0, 1, 0, 3},
-				{ 5, 2, 1, 0, 0, 1, 8},
-				{ 0, -3, -4, 0, 0, 0, 0}};
-
-			SimpleTable ST = new SimpleTable(STable);
+			SimpleTable ST = new SimpleTable(STable, countX - countBasis);
 			Console.WriteLine("Для чего используем симплекс-метод:");
 			Console.WriteLine("1. Максимальное значение целевой функции");
 			Console.WriteLine("2. Минимальное значение целевой функции");
