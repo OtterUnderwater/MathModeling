@@ -809,7 +809,8 @@ namespace ConsoleApp1
 			int[] indexI = new int[n];
 			int[] indexJ = new int[n];
 			bool notOptimal = false; //оптмальность плана
-			for (int i = 1, k = 0; i < referencePlan.GetLength(0); i++, k++)
+            //копирование плана и тарифа
+            for (int i = 1, k = 0; i < referencePlan.GetLength(0); i++, k++)
 			{
 				for (int j = 1, m = 0; j < referencePlan.GetLength(1); j++, m++)
 				{

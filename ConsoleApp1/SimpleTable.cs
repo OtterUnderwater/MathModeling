@@ -1,16 +1,7 @@
-﻿namespace ConsoleApp1
-{
-	class Znach
-	{
-		public int Index;
-		public decimal Value;
-		public Znach(int index, decimal znach)
-		{
-			Index = index;
-			Value = znach;
-		}
-	}
+﻿using ConsoleApp1.models;
 
+namespace ConsoleApp1
+{
 	public class SimpleTable
 	{
 		decimal[,] sTable; //Симплекс-таблица

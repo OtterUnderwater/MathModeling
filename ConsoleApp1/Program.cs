@@ -165,10 +165,41 @@ namespace ConsoleApp1
 				default: Console.WriteLine("Такого варианта нет нет"); break;
 			}
 		}
-
 		static void СallTSP()
-		{
-			/*TravellingSalesmanProblem*/
-		}
+        {
+            Console.WriteLine("Введите количество пунктов:");
+            int N = Convert.ToInt32(Console.ReadLine()) + 1;
+            int[,] matrix = new int[N, N];
+            // Нумеруем пункты
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            { 
+				matrix[i,0] = i; 
+			}
+            for (int j = 0; j < matrix.GetLength(1); j++)
+            { 
+				matrix[0, j] = j; 
+			}
+            // Вводим построчно матрицу
+            Console.WriteLine("Введите матрицу:");
+            for (int i = 1; i < matrix.GetLength(0); i++)
+            {
+                string buffer = Console.ReadLine();
+				string[] temp = new string[N-1];
+                temp = buffer.Split(" ").ToArray();
+                for (int j = 1, t = 0; j < matrix.GetLength(1); j++, t++)
+                {
+					if (temp[t] == "M")
+					{
+						matrix[i, j] = Int32.MaxValue;
+					}
+					else
+					{
+						matrix[i, j] = Convert.ToInt32(temp[t]);
+                    }
+                }
+            }
+            TravellingSalesmanProblem task = new TravellingSalesmanProblem(matrix);
+			task.LittsAlgorithm();
+        }
 	}
 }
