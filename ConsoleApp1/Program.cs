@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.ExceptionServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Schema;
-
+﻿
 namespace ConsoleApp1
 {
 	class Control

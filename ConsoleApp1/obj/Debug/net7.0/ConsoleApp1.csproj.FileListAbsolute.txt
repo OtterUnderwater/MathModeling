@@ -79,7 +79,6 @@ D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.Generat
 D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.AssemblyInfoInputs.cache
 D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.AssemblyInfo.cs
 D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.csproj.CoreCompileInputs.cache
-D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.sourcelink.json
 D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.dll
 D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\refint\ConsoleApp1.dll
 D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.pdb
