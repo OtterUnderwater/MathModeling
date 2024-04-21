@@ -5,10 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|d:\\otter\\vsproject\\mathmodeling\\consoleapp1\\travellingsalesmanproblem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|solutionrelative:consoleapp1\\travellingsalesmanproblem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|d:\\otter\\vsproject\\mathmodeling\\consoleapp1\\models\\track.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|solutionrelative:consoleapp1\\models\\track.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,26 +34,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Track.cs",
-              "DocumentMoniker": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\models\\Track.cs",
-              "RelativeDocumentMoniker": "ConsoleApp1\\models\\Track.cs",
-              "ToolTip": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\models\\Track.cs",
-              "RelativeToolTip": "ConsoleApp1\\models\\Track.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAACAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-21T15:08:38.607Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "TravellingSalesmanProblem.cs",
               "DocumentMoniker": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\TravellingSalesmanProblem.cs",
               "RelativeDocumentMoniker": "ConsoleApp1\\TravellingSalesmanProblem.cs",
               "ToolTip": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\TravellingSalesmanProblem.cs",
               "RelativeToolTip": "ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "ViewState": "AQIAAKwAAAAAAAAAAAAAAD8AAAADAAAA",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAQwBgAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-21T12:40:46.205Z",
               "EditorCaption": ""
