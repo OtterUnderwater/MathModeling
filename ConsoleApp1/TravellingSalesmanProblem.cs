@@ -4,10 +4,9 @@ namespace ConsoleApp1
 {
 	public class TravellingSalesmanProblem
 	{
-		const int M = Int32.MaxValue;
-		int[,] matrix;
-		//Лист следящий за всеми конечными путями
-		List<Track> tracks = new List<Track>();
+		private const int M = Int32.MaxValue;
+		private int[,] matrix;
+		private List<Track> tracks = new List<Track>(); //Лист следящий за всеми конечными путями
 
 		/// <summary>
 		/// Конструктор для вывода и заполнения массиыв
@@ -47,29 +46,20 @@ namespace ConsoleApp1
 		/// </summary>
 		private void PrintWayAndCosts(Track way)
 		{
-			List<int> startWay = new List<int>();
-			List<int> endWay = new List<int>();
-			//Заполняем список начала и конца пути
-			for (int i = 0; i < way.Way.Count; i++)
+			List<int> resultWay = new List<int>
 			{
-				((i % 2 == 0) ? startWay : endWay).Add(way.Way[i]);
-			}
-			List<int> cycle = new List<int>
-			{
-				startWay[0],
-				endWay[0]
+				way.Way[0].Item1,
+				way.Way[0].Item2
 			};
-			startWay.Remove(startWay[0]);
-			endWay.Remove(endWay[0]);
-			while (startWay.Count > 0 && endWay.Count > 0)
+			way.Way.RemoveAt(0); // Удаляем 0 кортеж по индексу
+			while (way.Way.Count > 0)
 			{
-				int index = startWay.IndexOf(cycle[cycle.Count - 1]);
-				cycle.Add(endWay[index]);
-				startWay.Remove(startWay[index]);
-				endWay.Remove(endWay[index]);
+				// Находим индекс массива, где 1 элемент равен последнему элементу resultWay
+				int index = way.Way.FindIndex(x => x.Item1 == resultWay.Last());
+				resultWay.Add(way.Way[index].Item2);
+				way.Way.RemoveAt(index);
 			}
-			string result = string.Join(" -> ", cycle); 
-			Console.WriteLine($"Путь: {result}");
+			Console.WriteLine($"Путь: {string.Join(" -> ", resultWay)}");
 			Console.WriteLine($"Оптимальное значение = {way.Costs}");
 		}
 
@@ -78,15 +68,12 @@ namespace ConsoleApp1
 		/// </summary>
 		public void LittsAlgorithm()
 		{
-			//Корневая нижняя граница H0
-			int H = GetSumReduction(ref matrix);
-			//Условие продолжения цикла
-			bool checkLength = true;
-			//Лист следящий за всеми конечными путями
+			int H = GetSumReduction(ref matrix); //Корневая нижняя граница H0
+			bool checkLength = true;  //Условие продолжения цикла
 			tracks.Add(new Track(null, null, H)); //Текущий путь
 			int head = 0; //Указатель на ветку
-			List<int> way = new List<int>();
-			List<int> noway = new List<int>();
+			List<(int, int)> way = new List<(int, int)>(); //Путь включая ветку
+			List<(int, int)> noway = new List<(int, int)>(); //Путь не включая ветку
 			while (checkLength)
 			{
 				//Оценка нулевых ячеек (Находим макс штраф)
@@ -103,20 +90,17 @@ namespace ConsoleApp1
 
 				//Включаем ветку (trackYes)
 				//Запоминаем значение пути
-				int nameStart = matrix[maxСellNullScore.Item1, 0];
-				int nameEnd = matrix[0, maxСellNullScore.Item2];
+				(int, int) nameWay = (matrix[maxСellNullScore.Item1, 0], matrix[0, maxСellNullScore.Item2]);
 				//Добавляем Начало и конец пути
-				way.Add(nameStart);
-				way.Add(nameEnd);
+				way.Add((nameWay.Item1, nameWay.Item2));
 				//Новая уменьшенная матрица
 				matrix = ReducingMatrix(matrix, maxСellNullScore.Item1, maxСellNullScore.Item2);
 				//Проверяем, что обратный путь существует
 				int indEnd = 0, indStart = 0;
-				CheckExistenceReturnPath(out indStart, out indEnd, nameStart, nameEnd);
-				//Запрещаем возвращение
+				CheckExistenceReturnPath(ref indStart, ref indEnd, nameWay.Item1, nameWay.Item2);
 				if (indStart != 0 && indEnd != 0)
 				{
-					matrix[indEnd, indStart] = M;
+					matrix[indEnd, indStart] = M; //Запрещаем возвращение
 				}
 				//Подсчет нижней локальной границы
 				int HLocal = H + GetSumReduction(ref matrix);
@@ -156,9 +140,7 @@ namespace ConsoleApp1
 				if (matrix.GetLength(0) == 2)
 				{
 					checkLength = false;
-					//Добавляем конец пути
-					tracks[head].Way.Add(matrix[1, 0]);
-					tracks[head].Way.Add(matrix[0, 1]);
+					tracks[head].Way.Add((matrix[1, 0], matrix[0, 1])); //Добавляем конец пути
 				}
 			}
 			PrintWayAndCosts(tracks[head]);
@@ -204,10 +186,8 @@ namespace ConsoleApp1
 		/// <param name="indEnd"></param>
 		/// <param name="NameStart"></param>
 		/// <param name="NameEnd"></param>
-		private void CheckExistenceReturnPath(out int indStart, out int indEnd, int NameStart, int NameEnd)
+		private void CheckExistenceReturnPath(ref int indStart, ref int indEnd, int NameStart, int NameEnd)
 		{
-			indEnd = 0;
-			indStart = 0;
 			for (int i = 1; i < matrix.GetLength(0); i++)
 			{
 				if (matrix[i, 0] == NameEnd)
