@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace ConsoleApp1
 {
 	class Control
@@ -7,7 +9,8 @@ namespace ConsoleApp1
 		{
 			try
 			{
-				int n, end;
+				int n;
+				ConsoleKeyInfo end;
 				do
 				{
 					Console.Clear();
@@ -15,18 +18,19 @@ namespace ConsoleApp1
 					Console.WriteLine("1. Транспортные задачи");
 					Console.WriteLine("2. Симплекс метод");
 					Console.WriteLine("3. Задача коммивояжера");
+					Console.WriteLine("4. Алгоритм Дейкстры");
 					n = Convert.ToInt32(Console.ReadLine());
 					switch (n)
 					{
 						case 1: СallMetods(); break;
 						case 2: СallSimpleTable(); break;
 						case 3: СallTSP(); break;
+						case 4: СallDijkstra(); break;
 						default: Console.WriteLine("Такой задачи нет"); break;
 					}
-					Console.WriteLine("\nВы хотите выбрать другую задачу? (1 - да, 0 - нет).");
-					end = Convert.ToInt32(Console.ReadLine());
-				} while (end > 0);
-
+					Console.WriteLine("\n Нажмите Esc для завершения");
+					end = Console.ReadKey();
+				} while (end.Key != ConsoleKey.Escape);
 			}
 			catch (Exception e)
 			{
@@ -47,8 +51,7 @@ namespace ConsoleApp1
 			int M = buffer2.Split(" ").Length; //определяем количество элементов
 			int[] temp2 = new int[M]; //создаем временный массив под количество элементов
 			temp2 = buffer2.Split(" ").Select(int.Parse).ToArray(); //Переводим в массив int             
-																	//Заполняем поставки и потребителей
-			int[,] Tariff = new int[N + 1, M + 1];
+			int[,] Tariff = new int[N + 1, M + 1]; //Заполняем поставки и потребителей
 			for (int i = 1, t = 0; i < Tariff.GetLength(0); i++, t++)
 			{
 				Tariff[i, 0] = temp1[t];
@@ -72,7 +75,8 @@ namespace ConsoleApp1
 				}
 			}
 			Methods method = new Methods(Tariff);
-			int n, end;
+			int n;
+			ConsoleKeyInfo end;
 			do
 			{
 				Console.WriteLine("Выберите каким методом решить транспортную задачу: ");
@@ -89,9 +93,9 @@ namespace ConsoleApp1
 					case 4: method.MFogelApproximations(Tariff); break;
 					default: Console.WriteLine("Такого метода нет"); break;
 				}
-				Console.WriteLine("\nВы хотите выбрать другой метод? (1 - да, 0 - нет).");
-				end = Convert.ToInt32(Console.ReadLine());
-			} while (end > 0);
+				Console.WriteLine("\nНажмите Esc для выхода в меню");
+				end = Console.ReadKey();
+			} while (end.Key != ConsoleKey.Escape);
 		}
 		static void СallSimpleTable()
 		{
@@ -151,7 +155,7 @@ namespace ConsoleApp1
 			{
 				case 1: ST.MaxObjectiveFunction(); break;
 				case 2: ST.MinObjectiveFunction(); break;
-				default: Console.WriteLine("Такого варианта нет нет"); break;
+				default: Console.WriteLine("Такого варианта нет"); break;
 			}
 		}
 		static void СallTSP()
@@ -168,7 +172,6 @@ namespace ConsoleApp1
             { 
 				matrix[0, j] = j; 
 			}
-            // Вводим построчно матрицу
             Console.WriteLine("Введите матрицу:");
             for (int i = 1; i < matrix.GetLength(0); i++)
             {
@@ -190,5 +193,23 @@ namespace ConsoleApp1
             TravellingSalesmanProblem task = new TravellingSalesmanProblem(matrix);
 			task.LittsAlgorithm();
         }
+		static void СallDijkstra()
+		{
+			Console.WriteLine("Введите количество точек:");
+			int countPoints = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine("Введите номер начальной точки:");
+			int startPoint = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine("Введите ребра с весом через пробел: (0 для выхода)");
+			List<(int, int, int)> ribs = new List<(int, int, int)>();	
+			string buffer;
+			while ((buffer = Console.ReadLine()) != "0")
+			{
+				int[] temp = buffer.Split(" ").Select(int.Parse).ToArray();
+				ribs.Add((temp[0], temp[1], temp[2]));
+			}
+			DijkstrasAlgorithm dijkstrasAlgorithm = new DijkstrasAlgorithm();
+			dijkstrasAlgorithm.GetListPaths(countPoints, startPoint, ribs);
+			/*На выходе список со значениями кратчайших вершин от заданной точки до всех остальных*/
+		}
 	}
 }

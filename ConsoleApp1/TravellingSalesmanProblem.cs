@@ -4,8 +4,8 @@ namespace ConsoleApp1
 {
 	public class TravellingSalesmanProblem
 	{
-		private const int M = Int32.MaxValue;
-		private int[,] matrix;
+		private const int M = Int32.MaxValue; //константа "бесконечности"
+		private int[,] matrix; //используемая матрица
 		private List<Track> tracks = new List<Track>(); //Лист следящий за всеми конечными путями
 
 		/// <summary>

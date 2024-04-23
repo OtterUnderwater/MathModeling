@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\otter\\VSProject\\MathModeling\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|d:\\otter\\vsproject\\mathmodeling\\consoleapp1\\travellingsalesmanproblem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|solutionrelative:consoleapp1\\travellingsalesmanproblem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|d:\\otter\\vsproject\\mathmodeling\\consoleapp1\\dijkstrasalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|solutionrelative:consoleapp1\\dijkstrasalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,14 +35,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TravellingSalesmanProblem.cs",
-              "DocumentMoniker": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "RelativeDocumentMoniker": "ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "ToolTip": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "RelativeToolTip": "ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "ViewState": "AQIAALwAAAAAAAAAAAA8wAgBAAAAAAAA",
+              "Title": "DijkstrasAlgorithm.cs",
+              "DocumentMoniker": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\DijkstrasAlgorithm.cs",
+              "RelativeDocumentMoniker": "ConsoleApp1\\DijkstrasAlgorithm.cs",
+              "ToolTip": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\DijkstrasAlgorithm.cs",
+              "RelativeToolTip": "ConsoleApp1\\DijkstrasAlgorithm.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-21T12:40:46.205Z",
+              "WhenOpened": "2024-04-22T15:50:03.268Z",
               "EditorCaption": ""
             }
           ]
