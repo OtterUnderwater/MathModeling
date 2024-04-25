@@ -208,8 +208,7 @@ namespace ConsoleApp1
 				ribs.Add((temp[0], temp[1], temp[2]));
 			}
 			DijkstrasAlgorithm dijkstrasAlgorithm = new DijkstrasAlgorithm();
-			dijkstrasAlgorithm.GetListPaths(countPoints, startPoint, ribs);
-			/*На выходе список со значениями кратчайших вершин от заданной точки до всех остальных*/
+			dijkstrasAlgorithm.ShortestPaths(countPoints, startPoint, ribs);
 		}
 	}
 }
