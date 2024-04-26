@@ -44,23 +44,23 @@ namespace ConsoleApp1
 		/// <summary>
 		/// Вывод оптимального значения и цикла в графе
 		/// </summary>
-		private void PrintWayAndCosts(Track way)
+		private void PrintWayAndCosts(Track trackWay)
 		{
 			List<int> resultWay = new List<int>
 			{
-				way.Way[0].Item1,
-				way.Way[0].Item2
+				trackWay.Way[0].Item1,
+				trackWay.Way[0].Item2
 			};
-			way.Way.RemoveAt(0); // Удаляем 0 кортеж по индексу
-			while (way.Way.Count > 0)
+			trackWay.Way.RemoveAt(0); // Удаляем 0 кортеж по индексу
+			while (trackWay.Way.Count > 0)
 			{
 				// Находим индекс массива, где 1 элемент равен последнему элементу resultWay
-				int index = way.Way.FindIndex(x => x.Item1 == resultWay.Last());
-				resultWay.Add(way.Way[index].Item2);
-				way.Way.RemoveAt(index);
+				int index = trackWay.Way.FindIndex(x => x.Item1 == resultWay.Last());
+				resultWay.Add(trackWay.Way[index].Item2);
+				trackWay.Way.RemoveAt(index);
 			}
 			Console.WriteLine($"Путь: {string.Join(" -> ", resultWay)}");
-			Console.WriteLine($"Оптимальное значение = {way.Costs}");
+			Console.WriteLine($"Оптимальное значение = {trackWay.Costs}");
 		}
 
 		/// <summary>
@@ -73,7 +73,6 @@ namespace ConsoleApp1
 			tracks.Add(new Track(null, null, H)); //Текущий путь
 			int head = 0; //Указатель на ветку
 			List<(int, int)> way = new List<(int, int)>(); //Путь включая ветку
-			List<(int, int)> noway = new List<(int, int)>(); //Путь не включая ветку
 			while (checkLength)
 			{
 				//Оценка нулевых ячеек (Находим макс штраф)
@@ -85,8 +84,7 @@ namespace ConsoleApp1
 				MakeReduction(ref newMatrixNo); //Редукция
 				//Подсчет нижней локальной границы
 				int HLocalNo = (maxСellNullScore.Item3 != M) ? (H + maxСellNullScore.Item3): M;
-				noway = way.ToList();
-				Track trackNo = new Track(noway, newMatrixNo, HLocalNo);
+				Track trackNo = new Track(way.ToList(), newMatrixNo, HLocalNo);
 
 				//Включаем ветку (trackYes)
 				//Запоминаем значение пути
@@ -136,7 +134,7 @@ namespace ConsoleApp1
 					matrix = CopyMatrix(minWay.Matrix);
 					H = minWay.Costs;
 				}
-				//Цикл продолжается до тех пор, пока размер матрицы не станет == 2
+				//Цикл продолжается до тех пор, пока размер матрицы не станет = 2
 				if (matrix.GetLength(0) == 2)
 				{
 					checkLength = false;

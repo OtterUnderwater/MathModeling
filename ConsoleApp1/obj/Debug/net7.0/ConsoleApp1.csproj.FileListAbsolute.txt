@@ -99,3 +99,4 @@ D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ref\ConsoleApp1.dll
 \\main\RDP\33П\токареваэо\Desktop\p\MathModeling\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.pdb
 \\main\RDP\33П\токареваэо\Desktop\p\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.genruntimeconfig.cache
 \\main\RDP\33П\токареваэо\Desktop\p\MathModeling\ConsoleApp1\obj\Debug\net7.0\ref\ConsoleApp1.dll
+D:\otter\VSProject\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.sourcelink.json
