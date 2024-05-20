@@ -19,14 +19,16 @@ namespace ConsoleApp1
 					Console.WriteLine("2. Симплекс метод");
 					Console.WriteLine("3. Задача коммивояжера");
 					Console.WriteLine("4. Алгоритм Дейкстры");
-					n = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("5. Задача Джонсона");
+                    n = Convert.ToInt32(Console.ReadLine());
 					switch (n)
 					{
 						case 1: СallMetods(); break;
 						case 2: СallSimpleTable(); break;
 						case 3: СallTSP(); break;
 						case 4: СallDijkstra(); break;
-						default: Console.WriteLine("Такой задачи нет"); break;
+                        case 5: СallJohnsonTask(); break;
+                        default: Console.WriteLine("Такой задачи нет"); break;
 					}
 					Console.WriteLine("\n Нажмите Esc для завершения");
 					end = Console.ReadKey();
@@ -210,5 +212,39 @@ namespace ConsoleApp1
 			DijkstrasAlgorithm dijkstrasAlgorithm = new DijkstrasAlgorithm();
 			dijkstrasAlgorithm.ShortestPaths(countPoints, startPoint, ribs);
 		}
-	}
+        static void СallJohnsonTask()
+		{
+			string path = @"files/johnson.txt";
+			List<(int, int, bool)> listJohnson = ReadFiles(path);
+            JohnsonTask johnsonTask = new JohnsonTask();
+			johnsonTask.GetAnswerJohnson(listJohnson);
+            Console.WriteLine("Результат записан в файл johnsonTaskAnswer.txt");
+        }
+
+        /// <summary>
+        /// Считывает данные из файла
+        /// </summary>
+        /// <param name="path"></param>
+        static private List<(int, int, bool)> ReadFiles(string path)
+        {
+			List<(int, int, bool)> listJohnson = new List<(int, int, bool)>();
+            try
+            {
+				using (StreamReader reader = new StreamReader(path))
+				{
+					string? line;
+					while ((line = reader.ReadLine()) != null)
+					{
+                        int[] listOneLine = line.Split().Select(int.Parse).ToArray();
+						listJohnson.Add((listOneLine[0], listOneLine[1], true));
+					}
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Создайте файл johnson.txt со столбцами со значением времени обработки деталей.");
+            }
+            return listJohnson;
+        }
+    }
 }
