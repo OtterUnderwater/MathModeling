@@ -7,7 +7,7 @@ namespace ConsoleApp1
         /// Возвращает оптимальный ответ, время простоя в начале, время простоя в конце
         /// </summary>
         /// <param name="listJohnson"></param>
-        public void GetAnswerJohnson(List<(int, int, bool)> listJohnson) {
+        public void GetAnswerJohnson(List<(int, int, bool Access)> listJohnson) {
             string downtimeBefore = GetMaxDowntime(listJohnson);
             int startIndex = 0;
             int endIndex = listJohnson.Count - 1;
@@ -16,7 +16,7 @@ namespace ConsoleApp1
                 int min = int.MaxValue;
                 for (int i = 0; i < listJohnson.Count; i++)
                 {
-                    if (listJohnson[i].Item3 && (listJohnson[i].Item1 < min || listJohnson[i].Item2 < min))
+                    if (listJohnson[i].Access && (listJohnson[i].Item1 < min || listJohnson[i].Item2 < min))
                     {
                         if (listJohnson[i].Item1 < listJohnson[i].Item2)
                         {
@@ -28,14 +28,14 @@ namespace ConsoleApp1
                         }
                     }
                 }
-                int count1 = listJohnson.Where(lj => lj.Item1 == min && lj.Item3).Count();
+                int count1 = listJohnson.Where(lj => lj.Item1 == min && lj.Access).Count();
                 while (count1 > 0)
                 {
                     if (count1 == 1)
                     {
                         for (int i = 0; i < listJohnson.Count; i++)
                         {
-                            if (listJohnson[i].Item1 == min && listJohnson[i].Item3)
+                            if (listJohnson[i].Item1 == min && listJohnson[i].Access)
                             {
                                 listJohnson[i] = (listJohnson[i].Item1, listJohnson[i].Item2, false);
                                 (int, int, bool) itemTemp = listJohnson[startIndex];
@@ -49,11 +49,11 @@ namespace ConsoleApp1
                     }
                     else
                     {
-                        int MaxEl2 = listJohnson.Where(lj => lj.Item1 == min && lj.Item3).Max(lj => lj.Item2);
-                        (int, int, bool) MaxEl = listJohnson.Where(lj => lj.Item1 == min && lj.Item3).Where(lj => lj.Item2 == MaxEl2).FirstOrDefault();
+                        int MaxEl2 = listJohnson.Where(lj => lj.Item1 == min && lj.Access).Max(lj => lj.Item2);
+                        (int, int, bool) MaxEl = listJohnson.Where(lj => lj.Item1 == min && lj.Access).Where(lj => lj.Item2 == MaxEl2).FirstOrDefault();
                         for (int i = 0; i < listJohnson.Count; i++)
                         {
-                            if (listJohnson[i].Item1 == MaxEl.Item1 && listJohnson[i].Item2 == MaxEl.Item2 && listJohnson[i].Item3)
+                            if (listJohnson[i].Item1 == MaxEl.Item1 && listJohnson[i].Item2 == MaxEl.Item2 && listJohnson[i].Access)
                             {
                                 listJohnson[i] = (listJohnson[i].Item1, listJohnson[i].Item2, false);
                                 (int, int, bool) itemTemp = listJohnson[startIndex];
@@ -66,14 +66,14 @@ namespace ConsoleApp1
                         count1--;
                     }
                 }
-                int count2 = listJohnson.Where(lj => lj.Item2 == min && lj.Item3).Count();
+                int count2 = listJohnson.Where(lj => lj.Item2 == min && lj.Access).Count();
                 while (count2 > 0)
                 {
                     if (count2 == 1)
                     {
                         for (int i = 0; i < listJohnson.Count; i++)
                         {
-                            if (listJohnson[i].Item2 == min && listJohnson[i].Item3)
+                            if (listJohnson[i].Item2 == min && listJohnson[i].Access)
                             {
                                 listJohnson[i] = (listJohnson[i].Item1, listJohnson[i].Item2, false);
                                 (int, int, bool) itemTemp = listJohnson[endIndex];
@@ -87,11 +87,11 @@ namespace ConsoleApp1
                     }
                     else
                     {
-                        int MaxEl2 = listJohnson.Where(lj => lj.Item2 == min && lj.Item3).Max(lj => lj.Item1);
-                        (int, int, bool) MaxEl = listJohnson.Where(lj => lj.Item2 == min && lj.Item3).Where(lj => lj.Item1 == MaxEl2).FirstOrDefault();
+                        int MaxEl2 = listJohnson.Where(lj => lj.Item2 == min && lj.Access).Max(lj => lj.Item1);
+                        (int, int, bool) MaxEl = listJohnson.Where(lj => lj.Item2 == min && lj.Access).Where(lj => lj.Item1 == MaxEl2).FirstOrDefault();
                         for (int i = 0; i < listJohnson.Count; i++)
                         {
-                            if (listJohnson[i].Item1 == MaxEl.Item1 && listJohnson[i].Item2 == MaxEl.Item2 && listJohnson[i].Item3)
+                            if (listJohnson[i].Item1 == MaxEl.Item1 && listJohnson[i].Item2 == MaxEl.Item2 && listJohnson[i].Access)
                             {
                                 listJohnson[i] = (listJohnson[i].Item1, listJohnson[i].Item2, false);
                                 (int, int, bool) itemTemp = listJohnson[endIndex];

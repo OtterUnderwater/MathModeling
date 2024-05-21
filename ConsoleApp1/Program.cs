@@ -20,14 +20,16 @@ namespace ConsoleApp1
 					Console.WriteLine("3. Задача коммивояжера");
 					Console.WriteLine("4. Алгоритм Дейкстры");
                     Console.WriteLine("5. Задача Джонсона");
+                    Console.WriteLine("6. Код Прюфера");
                     n = Convert.ToInt32(Console.ReadLine());
 					switch (n)
 					{
-						case 1: СallMetods(); break;
+                        case 1: СallMetods(); break;
 						case 2: СallSimpleTable(); break;
 						case 3: СallTSP(); break;
 						case 4: СallDijkstra(); break;
                         case 5: СallJohnsonTask(); break;
+                        case 6: СallPreuferCode(); break;
                         default: Console.WriteLine("Такой задачи нет"); break;
 					}
 					Console.WriteLine("\n Нажмите Esc для завершения");
@@ -215,36 +217,45 @@ namespace ConsoleApp1
         static void СallJohnsonTask()
 		{
 			string path = @"files/johnson.txt";
-			List<(int, int, bool)> listJohnson = ReadFiles(path);
+            List<int[]> temp = ReadFiles(path);
+			List<(int, int, bool)> listJohnson = new List<(int, int, bool)>();
+			temp.ForEach(item => listJohnson.Add((item[0], item[1], true)));
             JohnsonTask johnsonTask = new JohnsonTask();
 			johnsonTask.GetAnswerJohnson(listJohnson);
             Console.WriteLine("Результат записан в файл johnsonTaskAnswer.txt");
+        }
+        static void СallPreuferCode()
+		{
+            string path = @"files/preufer.txt";
+            List<int[]> listFromFile = ReadFiles(path);
+            PreuferCode preuferCode = new PreuferCode();
+            preuferCode.GetPreuferCode(listFromFile);
+            Console.WriteLine("Результат записан в файл preuferCodeAnswer.txt");
         }
 
         /// <summary>
         /// Считывает данные из файла
         /// </summary>
         /// <param name="path"></param>
-        static private List<(int, int, bool)> ReadFiles(string path)
+        static private List<int[]> ReadFiles(string path)
         {
-			List<(int, int, bool)> listJohnson = new List<(int, int, bool)>();
+			List<int[]> listOneLine = new List<int[]>();
             try
             {
-				using (StreamReader reader = new StreamReader(path))
-				{
-					string? line;
-					while ((line = reader.ReadLine()) != null)
-					{
-                        int[] listOneLine = line.Split().Select(int.Parse).ToArray();
-						listJohnson.Add((listOneLine[0], listOneLine[1], true));
-					}
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+						listOneLine.Add(line.Split().Select(int.Parse).ToArray());
+                    }
                 }
             }
             catch
             {
-                Console.WriteLine("Создайте файл johnson.txt со столбцами со значением времени обработки деталей.");
+                Console.WriteLine("Отсутствует необходимый файл");
             }
-            return listJohnson;
+            return listOneLine;
         }
     }
 }
