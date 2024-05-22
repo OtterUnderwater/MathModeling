@@ -1,8 +1,11 @@
 ﻿using ConsoleApp1.models;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection.Emit;
+using System.Text;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleApp1
 {
@@ -16,22 +19,25 @@ namespace ConsoleApp1
         {
             string codeAnswer = ""; //Итоговый код
             Dictionary<int, TreeNode> tree = new Dictionary<int, TreeNode>();
-            foreach (int[] code in codeList)
+            foreach (int[] rib in codeList)
             {
-                int parent = code[0];
-                int child = code[1];
+                int parent = rib[0];
+                int child = rib[1];
+                // Создаем родителя, если его нет
                 if (!tree.ContainsKey(parent))
                 {
                     tree[parent] = new TreeNode(parent);
                 }
+                // Создаем ребенка, если его нет
                 if (!tree.ContainsKey(child))
                 {
                     tree[child] = new TreeNode(child);
                 }
+                // добавляет дочерний узел к родительскому
                 tree[parent].AddChildren(tree[child]);
             }
             Console.WriteLine("Дерево:");
-            PrintTree(tree);
+            PrintTreeConsole(tree[1], 0);
             while (tree.Count > 2)
             {
                 // Получаем все листы
@@ -40,33 +46,53 @@ namespace ConsoleApp1
                 // добавляем связанный элемент в код и удаляем лист
                 if (minLeaf.Parent == null) // Проверяем, является ли minLeaf корневым узлом
                 {
-                    codeAnswer += minLeaf.Children[0].Value;
+                    codeAnswer += minLeaf.Children[0].Value + " ";
                     tree.Remove(minLeaf.Value);
                 }
                 else
                 {
-                    codeAnswer += minLeaf.Parent.Value;
+                    codeAnswer += minLeaf.Parent.Value + " ";
                     TreeNode parent = tree[minLeaf.Parent.Value]; // нашли родителя
                     parent.Children.Remove(minLeaf);  // удаление minLeaf из списка потомков
                     tree.Remove(minLeaf.Value);
                 }
             }
+            codeAnswer = codeAnswer.Substring(0, codeAnswer.Length - 1);
             Console.WriteLine("Код прюфера: " + codeAnswer);
-            WriteToFile("Код прюфера: " + codeAnswer);
+            WriteToFileCode("Код прюфера: " + codeAnswer);
         }
 
         /// <summary>
-        /// Вывод дерева
+        /// Декодирование кода в дерево
         /// </summary>
-        /// <param name="tree"></param>
-        public void PrintTree(Dictionary<int, TreeNode> tree) => PrintNode(tree[1], 0);
+        /// <param name="listCode"></param>
+        public void GetTreePreufer(List<int> listCode)
+        {
+            List<int> listTop = new List<int>();
+            List<int[]> ribsList = new List<int[]>();
+            for (int i = 1; i <= listCode.Count + 2; i++)
+            {
+                listTop.Add(i);
+            }
+            while (listTop.Count > 2)
+            {
+                int minDistingTop = listTop.FirstOrDefault(t => !listCode.Any(c => t == c));
+                int indexMinTop = listTop.IndexOf(minDistingTop);
+                int[] rib = { listCode[0], listTop[indexMinTop] };
+                ribsList.Add(rib);
+                listCode.RemoveAt(0);
+                listTop.RemoveAt(indexMinTop);
+            }
+            int[] endRib = { listTop[0], listTop[1] };
+            ribsList.Add(endRib);
+            WriteToFileAndConsoleTree(ribsList);
+        }
 
         /// <summary>
-        /// Вывод одного корня
+        /// Вывод дерева в консоль
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="level"></param>
-        private void PrintNode(TreeNode node, int level)
+        /// <param name="tree"></param>
+        private void PrintTreeConsole(TreeNode node, int level)
         {
             if (node == null)
                 return;
@@ -75,20 +101,39 @@ namespace ConsoleApp1
 
             foreach (var child in node.Children)
             {
-                PrintNode(child, level + 1);
+                PrintTreeConsole(child, level + 1);
             }
         }
 
         /// <summary>
-        /// Вывод в файл
+        /// Вывод в файл кода
         /// </summary>
         /// <param name="codeAnswer"></param>
-        private void WriteToFile(string codeAnswer)
+        private void WriteToFileCode(string codeAnswer)
         {
             string path = @"files/preuferCodeAnswer.txt";
             using (StreamWriter writer = new StreamWriter(path, false))
             {
                 writer.WriteLine(codeAnswer);
+            }
+        }
+
+        /// <summary>
+        /// Вывод в файл дерева
+        /// </summary>
+        /// <param name="listAnswer"></param>
+        private void WriteToFileAndConsoleTree(List<int[]> ribsList)
+        {
+            string path = @"files/codePreuferInTreeAnswer.txt";
+            using (StreamWriter writer = new StreamWriter(path, false))
+            {
+                Console.WriteLine("Ребра дерева:");
+                writer.WriteLine("Ребра дерева:");
+                foreach (int[] rib in ribsList)
+                {
+                    Console.WriteLine(string.Join(" ", rib));
+                    writer.WriteLine(string.Join(" ", rib));
+                }
             }
         }
     }

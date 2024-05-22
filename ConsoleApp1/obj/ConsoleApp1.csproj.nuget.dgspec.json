@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "X:\\p\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "X:\\p\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "X:\\p\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "X:\\p\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectPath": "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\MathModeling\\ConsoleApp1\\ConsoleApp1.csproj",
         "packagesPath": "C:\\Users\\токареваэо\\.nuget\\packages\\",
-        "outputPath": "X:\\p\\MathModeling\\ConsoleApp1\\obj\\",
+        "outputPath": "\\\\main\\RDP\\33П\\токареваэо\\Desktop\\p\\MathModeling\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\токареваэо\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -20,7 +20,9 @@ namespace ConsoleApp1
 					Console.WriteLine("3. Задача коммивояжера");
 					Console.WriteLine("4. Алгоритм Дейкстры");
                     Console.WriteLine("5. Задача Джонсона");
-                    Console.WriteLine("6. Код Прюфера");
+                    Console.WriteLine("6. Кодирование в код Прюфера");
+                    Console.WriteLine("7. Декодирование из кода Прюфера в дерево");
+                    Console.WriteLine("8. Монте-карло");
                     n = Convert.ToInt32(Console.ReadLine());
 					switch (n)
 					{
@@ -30,6 +32,8 @@ namespace ConsoleApp1
 						case 4: СallDijkstra(); break;
                         case 5: СallJohnsonTask(); break;
                         case 6: СallPreuferCode(); break;
+                        case 7: СallTreePreufer(); break;
+                        case 8: СallMonteCarlo(); break;
                         default: Console.WriteLine("Такой задачи нет"); break;
 					}
 					Console.WriteLine("\n Нажмите Esc для завершения");
@@ -232,6 +236,36 @@ namespace ConsoleApp1
             preuferCode.GetPreuferCode(listFromFile);
             Console.WriteLine("Результат записан в файл preuferCodeAnswer.txt");
         }
+        static void СallTreePreufer()
+        {
+            string path = @"files/codePreuferInTree.txt";
+            List<int> listFromFile = ReadFilesList(path);
+            PreuferCode preuferCode = new PreuferCode();
+            preuferCode.GetTreePreufer(listFromFile);
+            Console.WriteLine("Результат записан в файл treePreuferAnswer.txt");
+        }
+        static void СallMonteCarlo()
+        {
+            string path = @"files/monteCarlo.txt";
+            MonteCarlo monteCarlo = new MonteCarlo();
+            int n;
+            ConsoleKeyInfo end;
+            do
+            {
+                Console.WriteLine("Выберите что хотите найти с помощью Монте-Карло: ");
+                Console.WriteLine("1. Вычисление значения числа Pi.");
+                Console.WriteLine("2. Вычисление значения S фигуры на графике");
+                n = Convert.ToInt32(Console.ReadLine());
+                switch (n)
+                {
+                    case 1: monteCarlo.GetMonteCarloPi(); break;
+                    case 2: monteCarlo.GetMonteCarloS(); break;
+                    default: Console.WriteLine("Такого нет"); break;
+                }
+                Console.WriteLine("\nНажмите Esc для выхода в меню");
+                end = Console.ReadKey();
+            } while (end.Key != ConsoleKey.Escape);
+        }
 
         /// <summary>
         /// Считывает данные из файла
@@ -248,6 +282,31 @@ namespace ConsoleApp1
                     while ((line = reader.ReadLine()) != null)
                     {
 						listOneLine.Add(line.Split().Select(int.Parse).ToArray());
+                    }
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Отсутствует необходимый файл");
+            }
+            return listOneLine;
+        }
+
+        /// <summary>
+        /// Считывает данные из файла
+        /// </summary>
+        /// <param name="path"></param>
+        static private List<int> ReadFilesList(string path)
+        {
+            List<int> listOneLine = new List<int>();
+            try
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        listOneLine = line.Split().Select(int.Parse).ToList();
                     }
                 }
             }
