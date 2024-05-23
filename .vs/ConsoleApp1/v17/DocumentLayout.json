@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "D:\\otter\\VSProject\\MathModeling\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|d:\\otter\\vsproject\\mathmodeling\\consoleapp1\\travellingsalesmanproblem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|solutionrelative:consoleapp1\\travellingsalesmanproblem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|d:\\otter\\vsproject\\mathmodeling\\consoleapp1\\montecarlo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|solutionrelative:consoleapp1\\montecarlo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|d:\\otter\\vsproject\\mathmodeling\\consoleapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9367DA04-035C-4588-A603-B4C370163F05}|ConsoleApp1\\ConsoleApp1.csproj|solutionrelative:consoleapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,14 +39,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TravellingSalesmanProblem.cs",
-              "DocumentMoniker": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "RelativeDocumentMoniker": "ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "ToolTip": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "RelativeToolTip": "ConsoleApp1\\TravellingSalesmanProblem.cs",
-              "ViewState": "AQIAAFAAAAAAAAAAAAAIwIgAAABCAAAA",
+              "Title": "MonteCarlo.cs",
+              "DocumentMoniker": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\MonteCarlo.cs",
+              "RelativeDocumentMoniker": "ConsoleApp1\\MonteCarlo.cs",
+              "ToolTip": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\MonteCarlo.cs",
+              "RelativeToolTip": "ConsoleApp1\\MonteCarlo.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAwAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-26T13:52:58.867Z",
+              "WhenOpened": "2024-05-23T17:36:24.777Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\Program.cs",
+              "RelativeDocumentMoniker": "ConsoleApp1\\Program.cs",
+              "ToolTip": "D:\\otter\\VSProject\\MathModeling\\ConsoleApp1\\Program.cs",
+              "RelativeToolTip": "ConsoleApp1\\Program.cs",
+              "ViewState": "AQIAAPgAAAAAAAAAAAAYwDEBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-23T17:36:23.054Z",
               "EditorCaption": ""
             }
           ]

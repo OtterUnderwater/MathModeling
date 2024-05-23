@@ -9,9 +9,8 @@ namespace ConsoleApp1
 {
     public class MonteCarlo
     {
-        private Random random = new Random();
-        private int _countGrains = 1000000; //количество итераций цикла
-
+        private readonly Random random = new Random();
+        private readonly int _countGrains = 1000000; //количество итераций цикла
         public void GetMonteCarloPi()
         {
             double side = 2;
@@ -30,7 +29,6 @@ namespace ConsoleApp1
             Console.WriteLine($"Результат pi = {S}");
             Console.WriteLine($"Точное pi = {Math.PI}");
         }
-
         public void GetMonteCarloS()
         {
             //ширина и высота базового прямоугольника
@@ -49,19 +47,17 @@ namespace ConsoleApp1
             double S = width * height * countHits / _countGrains;
             Console.WriteLine($"Результат S = {S}");
         }
-
-        public void GetMonteCarloS2()
+        public void GetMonteCarloS1()
         {
-            //ширина и высота базового прямоугольника
-            double width = 8.5;  //ширина прямоугольника (a) ХЗ ХЗ ХЗ 
-            double height = 5; //высота прямоугольника (b)
-            double countHits = 0; //количество попаданий (k)
+            double width = 16; //ширина
+            double height = 1; //высота
+			double countHits = 0; //количество попаданий
             for (int i = 0; i < _countGrains; i++)
             {
-                double x = random.NextDouble() * 1;
-                double y = random.NextDouble() * 2;
-
-                if ((y <= Math.Sin(x) && ((x is -3 or 0) || (x is 3 or 6) || (x is 9 or 12)))
+                double x = random.NextDouble() * width; 
+				double y = random.NextDouble() * height;
+				if ((Math.Sin(x) <= y && y <= 0) &&
+					((-3 <= x && x <= 0) || (3 <= x && x <= 7) || (10 <= x && x <= 13)))
                 {
                     countHits++;
                 }
@@ -69,5 +65,90 @@ namespace ConsoleApp1
             double S = width * height * countHits / _countGrains;
             Console.WriteLine($"Результат S = {S}");
         }
-    }
+		public void GetMonteCarloS2()
+		{
+			double width = 7;
+			double height = 8;
+			double countHits = 0;
+			for (int i = 0; i < _countGrains; i++)
+			{
+				double x = random.NextDouble() * width;
+				double y = random.NextDouble() * height;
+				if ((0 <= x && x <= 7) && ((x/2) <= y && y <= (x * (8 - x) / 2)))
+				{
+					countHits++;
+				}
+			}
+			double S = width * height * countHits / _countGrains;
+			Console.WriteLine($"Результат S = {S}");
+		}
+		public void GetMonteCarloS3()
+		{
+			double width = 12;
+			double height = 6;
+			double countHits = 0;
+			for (int i = 0; i < _countGrains; i++)
+			{
+				double x = random.NextDouble() * width;
+				double y = random.NextDouble() * height;
+				if ((0 <= x && x <= 12) && (Math.Pow((x - 6), 2) / 6 <= y && y <= 6))
+				{
+					countHits++;
+				}
+			}
+			double S = width * height * countHits / _countGrains;
+			Console.WriteLine($"Результат S = {S}");
+		}
+		public void GetMonteCarloS4()
+		{
+			double width = 10;
+			double height = 4;
+			double countHits = 0;
+			for (int i = 0; i < _countGrains; i++)
+			{
+				double x = random.NextDouble() * width;
+				double y = random.NextDouble() * height;
+				if ((0 <= x && x <= 10) && (x / 5 <= y && y <= x * (12 - x) / 9))
+				{
+					countHits++;
+				}
+			}
+			double S = width * height * countHits / _countGrains;
+			Console.WriteLine($"Результат S = {S}");
+		}
+		public void GetMonteCarloS5()
+		{
+			double width = 7;
+			double height = 4;
+			double countHits = 0;
+			for (int i = 0; i < _countGrains; i++)
+			{
+				double x = random.NextDouble() * width;
+				double y = random.NextDouble() * height;
+				if ((1 <= x && x <= 8) && ((8 - x) / 8 <= y && y <= x * (8 - x) / 4))
+				{
+					countHits++;
+				}
+			}
+			double S = width * height * countHits / _countGrains;
+			Console.WriteLine($"Результат S = {S}");
+		}
+		public void GetMonteCarloS6()
+		{
+			double width = 2;
+			double height = 1;
+			double countHits = 0;
+			for (int i = 0; i < _countGrains; i++)
+			{
+				double x = random.NextDouble() * width;
+				double y = random.NextDouble() * height;
+				if ((1 <= x && x <= 3) && (Math.Pow((x - 2), 2) / 2 <= y && y <= Math.Sin(x)))
+				{
+					countHits++;
+				}
+			}
+			double S = width * height * countHits / _countGrains;
+			Console.WriteLine($"Результат S = {S}");
+		}
+	}
 }

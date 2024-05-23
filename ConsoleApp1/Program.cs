@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 namespace ConsoleApp1
@@ -246,7 +247,6 @@ namespace ConsoleApp1
         }
         static void СallMonteCarlo()
         {
-            string path = @"files/monteCarlo.txt";
             MonteCarlo monteCarlo = new MonteCarlo();
             int n;
             ConsoleKeyInfo end;
@@ -255,12 +255,24 @@ namespace ConsoleApp1
                 Console.WriteLine("Выберите что хотите найти с помощью Монте-Карло: ");
                 Console.WriteLine("1. Вычисление значения числа Pi.");
                 Console.WriteLine("2. Вычисление значения S фигуры на графике");
-                n = Convert.ToInt32(Console.ReadLine());
+				Console.WriteLine("3. Вычисление S задачи 1");
+				Console.WriteLine("4. Вычисление S задачи 2");
+				Console.WriteLine("5. Вычисление S задачи 3");
+				Console.WriteLine("6. Вычисление S задачи 4");
+				Console.WriteLine("7. Вычисление S задачи 5");
+				Console.WriteLine("8. Вычисление S задачи 6");
+				n = Convert.ToInt32(Console.ReadLine());
                 switch (n)
                 {
                     case 1: monteCarlo.GetMonteCarloPi(); break;
                     case 2: monteCarlo.GetMonteCarloS(); break;
-                    default: Console.WriteLine("Такого нет"); break;
+					case 3: monteCarlo.GetMonteCarloS1(); break;
+					case 4: monteCarlo.GetMonteCarloS2(); break;
+					case 5: monteCarlo.GetMonteCarloS3(); break;
+					case 6: monteCarlo.GetMonteCarloS4(); break;
+					case 7: monteCarlo.GetMonteCarloS5(); break;
+					case 8: monteCarlo.GetMonteCarloS6(); break;
+					default: Console.WriteLine("Такого нет"); break;
                 }
                 Console.WriteLine("\nНажмите Esc для выхода в меню");
                 end = Console.ReadKey();
