@@ -49,15 +49,15 @@ namespace ConsoleApp1
         }
         public void GetMonteCarloS1()
         {
-            double width = 16; //ширина
+            double width = 20; //ширина
             double height = 1; //высота
 			double countHits = 0; //количество попаданий
             for (int i = 0; i < _countGrains; i++)
             {
                 double x = random.NextDouble() * width; 
 				double y = random.NextDouble() * height;
-				if ((Math.Sin(x) <= y && y <= 0) &&
-					((-3 <= x && x <= 0) || (3 <= x && x <= 7) || (10 <= x && x <= 13)))
+				if ((0 <= y && y <= Math.Sin(x)) &&
+					((-4 <= x && x <= -3) || (0 <= x && x <= 3) || (6 <= x && x <= 10) || (13 <= x && x <= 15)))
                 {
                     countHits++;
                 }
@@ -150,5 +150,5 @@ namespace ConsoleApp1
 			double S = width * height * countHits / _countGrains;
 			Console.WriteLine($"Результат S = {S}");
 		}
-	}
+    }
 }

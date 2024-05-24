@@ -24,6 +24,7 @@ namespace ConsoleApp1
                     Console.WriteLine("6. Кодирование в код Прюфера");
                     Console.WriteLine("7. Декодирование из кода Прюфера в дерево");
                     Console.WriteLine("8. Монте-карло");
+                    Console.WriteLine("9. Задача распределения инвестиций");
                     n = Convert.ToInt32(Console.ReadLine());
 					switch (n)
 					{
@@ -35,6 +36,7 @@ namespace ConsoleApp1
                         case 6: СallPreuferCode(); break;
                         case 7: СallTreePreufer(); break;
                         case 8: СallMonteCarlo(); break;
+                        case 9: СallAllocatingInvestments(); break;
                         default: Console.WriteLine("Такой задачи нет"); break;
 					}
 					Console.WriteLine("\n Нажмите Esc для завершения");
@@ -278,6 +280,13 @@ namespace ConsoleApp1
                 end = Console.ReadKey();
             } while (end.Key != ConsoleKey.Escape);
         }
+        static void СallAllocatingInvestments()
+		{
+            string path = @"files/taskOfAllocatingInvestments.txt";
+            Dictionary<int, List<int>> profitMatrix = ReadFilesDictionary(path);
+			TaskOfAllocatingInvestments TAI = new TaskOfAllocatingInvestments();
+            TAI.AllocatingInvestments(profitMatrix);
+        }
 
         /// <summary>
         /// Считывает данные из файла
@@ -327,6 +336,36 @@ namespace ConsoleApp1
                 Console.WriteLine("Отсутствует необходимый файл");
             }
             return listOneLine;
+        }
+
+        /// <summary>
+        /// Считывает данные из файла в словарь
+        /// </summary>
+        /// <param name="path"></param>
+        static private Dictionary<int, List<int>> ReadFilesDictionary(string path)
+        {
+            Dictionary<int, List<int>> profitMatrix = new Dictionary<int, List<int>>();
+            List<int> listOneLine = new List<int>();
+            try
+            {
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    string? line;
+					reader.ReadLine();
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        listOneLine = line.Split().Select(int.Parse).ToList();
+						int key = listOneLine[0];
+                        listOneLine.RemoveAt(0);
+						profitMatrix.Add(key, listOneLine);
+                    }
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Отсутствует необходимый файл");
+            }
+            return profitMatrix;
         }
     }
 }
