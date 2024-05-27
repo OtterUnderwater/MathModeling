@@ -1,11 +1,4 @@
 ﻿using ConsoleApp1.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ConsoleApp1
 {
@@ -83,7 +76,6 @@ namespace ConsoleApp1
                     }
                 }
             }
-            Console.WriteLine("Ответ");
             int startIndex = 0;
             bool first = true;
             int rate = 0;
@@ -104,10 +96,9 @@ namespace ConsoleApp1
             }
             companyRate.Add(rate);
             int maxProfitAnswer = 0;
-            //Считаем максимальную прибыль с итоговой матрицы (и выводим тарифы)
+            //Считаем максимальную прибыль с итоговой матрицы
             for (int i = 0; i < companyRate.Count; i++)
             {
-                Console.WriteLine($"{i} = {companyRate[i]}");
                 foreach (List<int> item in saveMatrix)
                 {
                     if (item[0] == companyRate[i])
@@ -116,14 +107,9 @@ namespace ConsoleApp1
                     }
                 }
             }
-            Console.WriteLine($"F = {maxProfitAnswer}");
+			WriteToFile(companyRate, maxProfitAnswer);
         }
 
-        /// <summary>
-        /// Копирование матрицы в листы
-        /// </summary>
-        /// <param name="profitMatrix"></param>
-        /// <returns></returns>
         private List<List<int>> CopyMatrix(List<List<int>> profitMatrix)
         {
             List<List<int>> matrix = new List<List<int>>();
@@ -134,5 +120,20 @@ namespace ConsoleApp1
             }
             return matrix;
         }
-    }
+
+		private void WriteToFile(List<int> companyRate, int F)
+		{
+			string path = @"files/taskOfAllocatingInvestmentsAnswer.txt";
+			using (StreamWriter writer = new StreamWriter(path, false))
+            {
+				for (int i = 0; i < companyRate.Count; i++)
+				{
+					writer.WriteLine($"{i + 1} = {companyRate[i]}");
+					Console.WriteLine($"{i + 1} = {companyRate[i]}");
+				}
+				writer.WriteLine($"F = {F}");
+				Console.WriteLine($"F = {F}");
+			}
+		}
+	}
 }
