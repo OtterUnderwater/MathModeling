@@ -114,3 +114,17 @@ X:\p\MathModeling\ConsoleApp1\obj\Debug\net7.0\refint\ConsoleApp1.dll
 X:\p\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.pdb
 X:\p\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.genruntimeconfig.cache
 X:\p\MathModeling\ConsoleApp1\obj\Debug\net7.0\ref\ConsoleApp1.dll
+D:\otter\C#\MathModeling\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.exe
+D:\otter\C#\MathModeling\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.deps.json
+D:\otter\C#\MathModeling\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.runtimeconfig.json
+D:\otter\C#\MathModeling\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.dll
+D:\otter\C#\MathModeling\ConsoleApp1\bin\Debug\net7.0\ConsoleApp1.pdb
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.AssemblyInfoInputs.cache
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.AssemblyInfo.cs
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.csproj.CoreCompileInputs.cache
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.dll
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\refint\ConsoleApp1.dll
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.pdb
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\ConsoleApp1.genruntimeconfig.cache
+D:\otter\C#\MathModeling\ConsoleApp1\obj\Debug\net7.0\ref\ConsoleApp1.dll

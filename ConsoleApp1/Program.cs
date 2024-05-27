@@ -20,24 +20,24 @@ namespace ConsoleApp1
 					Console.WriteLine("2. Симплекс метод");
 					Console.WriteLine("3. Задача коммивояжера");
 					Console.WriteLine("4. Алгоритм Дейкстры");
-                    Console.WriteLine("5. Задача Джонсона");
-                    Console.WriteLine("6. Кодирование в код Прюфера");
-                    Console.WriteLine("7. Декодирование из кода Прюфера в дерево");
-                    Console.WriteLine("8. Монте-карло");
-                    Console.WriteLine("9. Задача распределения инвестиций");
-                    n = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine("5. Задача Джонсона");
+					Console.WriteLine("6. Кодирование в код Прюфера");
+					Console.WriteLine("7. Декодирование из кода Прюфера в дерево");
+					Console.WriteLine("8. Монте-карло");
+					Console.WriteLine("9. Задача распределения инвестиций");
+					n = Convert.ToInt32(Console.ReadLine());
 					switch (n)
 					{
-                        case 1: СallMetods(); break;
+						case 1: СallMetods(); break;
 						case 2: СallSimpleTable(); break;
 						case 3: СallTSP(); break;
 						case 4: СallDijkstra(); break;
-                        case 5: СallJohnsonTask(); break;
-                        case 6: СallPreuferCode(); break;
-                        case 7: СallTreePreufer(); break;
-                        case 8: СallMonteCarlo(); break;
-                        case 9: СallAllocatingInvestments(); break;
-                        default: Console.WriteLine("Такой задачи нет"); break;
+						case 5: СallJohnsonTask(); break;
+						case 6: СallPreuferCode(); break;
+						case 7: СallTreePreufer(); break;
+						case 8: СallMonteCarlo(); break;
+						case 9: СallAllocatingInvestments(); break;
+						default: Console.WriteLine("Такой задачи нет"); break;
 					}
 					Console.WriteLine("\n Нажмите Esc для завершения");
 					end = Console.ReadKey();
@@ -170,27 +170,27 @@ namespace ConsoleApp1
 			}
 		}
 		static void СallTSP()
-        {
-            Console.WriteLine("Введите количество пунктов:");
-            int N = Convert.ToInt32(Console.ReadLine()) + 1;
-            int[,] matrix = new int[N, N];
-            // Нумеруем пункты
-            for (int i = 0; i < matrix.GetLength(0); i++)
-            { 
-				matrix[i,0] = i; 
+		{
+			Console.WriteLine("Введите количество пунктов:");
+			int N = Convert.ToInt32(Console.ReadLine()) + 1;
+			int[,] matrix = new int[N, N];
+			// Нумеруем пункты
+			for (int i = 0; i < matrix.GetLength(0); i++)
+			{
+				matrix[i, 0] = i;
 			}
-            for (int j = 0; j < matrix.GetLength(1); j++)
-            { 
-				matrix[0, j] = j; 
+			for (int j = 0; j < matrix.GetLength(1); j++)
+			{
+				matrix[0, j] = j;
 			}
-            Console.WriteLine("Введите матрицу:");
-            for (int i = 1; i < matrix.GetLength(0); i++)
-            {
-                string buffer = Console.ReadLine();
-				string[] temp = new string[N-1];
-                temp = buffer.Split(" ").ToArray();
-                for (int j = 1, t = 0; j < matrix.GetLength(1); j++, t++)
-                {
+			Console.WriteLine("Введите матрицу:");
+			for (int i = 1; i < matrix.GetLength(0); i++)
+			{
+				string buffer = Console.ReadLine();
+				string[] temp = new string[N - 1];
+				temp = buffer.Split(" ").ToArray();
+				for (int j = 1, t = 0; j < matrix.GetLength(1); j++, t++)
+				{
 					if (temp[t] == "M")
 					{
 						matrix[i, j] = Int32.MaxValue;
@@ -198,12 +198,12 @@ namespace ConsoleApp1
 					else
 					{
 						matrix[i, j] = Convert.ToInt32(temp[t]);
-                    }
-                }
-            }
-            TravellingSalesmanProblem task = new TravellingSalesmanProblem(matrix);
+					}
+				}
+			}
+			TravellingSalesmanProblem task = new TravellingSalesmanProblem(matrix);
 			task.LittsAlgorithm();
-        }
+		}
 		static void СallDijkstra()
 		{
 			Console.WriteLine("Введите количество точек:");
@@ -211,7 +211,7 @@ namespace ConsoleApp1
 			Console.WriteLine("Введите номер начальной точки:");
 			int startPoint = Convert.ToInt32(Console.ReadLine());
 			Console.WriteLine("Введите ребра с весом через пробел: (0 для выхода)");
-			List<(int, int, int)> ribs = new List<(int, int, int)>();	
+			List<(int, int, int)> ribs = new List<(int, int, int)>();
 			string buffer;
 			while ((buffer = Console.ReadLine()) != "0")
 			{
@@ -221,151 +221,131 @@ namespace ConsoleApp1
 			DijkstrasAlgorithm dijkstrasAlgorithm = new DijkstrasAlgorithm();
 			dijkstrasAlgorithm.ShortestPaths(countPoints, startPoint, ribs);
 		}
-        static void СallJohnsonTask()
+		static void СallJohnsonTask()
 		{
 			string path = @"files/johnson.txt";
-            List<int[]> temp = ReadFiles(path);
+			List<int[]> temp = ReadFiles(path);
 			List<(int, int, bool)> listJohnson = new List<(int, int, bool)>();
 			temp.ForEach(item => listJohnson.Add((item[0], item[1], true)));
-            JohnsonTask johnsonTask = new JohnsonTask();
+			JohnsonTask johnsonTask = new JohnsonTask();
 			johnsonTask.GetAnswerJohnson(listJohnson);
-            Console.WriteLine("Результат записан в файл johnsonTaskAnswer.txt");
-        }
-        static void СallPreuferCode()
+			Console.WriteLine("Результат записан в файл johnsonTaskAnswer.txt");
+		}
+		static void СallPreuferCode()
 		{
-            string path = @"files/preufer.txt";
-            List<int[]> listFromFile = ReadFiles(path);
-            PreuferCode preuferCode = new PreuferCode();
-            preuferCode.GetPreuferCode(listFromFile);
-            Console.WriteLine("Результат записан в файл preuferCodeAnswer.txt");
-        }
-        static void СallTreePreufer()
-        {
-            string path = @"files/codePreuferInTree.txt";
-            List<int> listFromFile = ReadFilesList(path);
-            PreuferCode preuferCode = new PreuferCode();
-            preuferCode.GetTreePreufer(listFromFile);
-            Console.WriteLine("Результат записан в файл treePreuferAnswer.txt");
-        }
-        static void СallMonteCarlo()
-        {
-            MonteCarlo monteCarlo = new MonteCarlo();
-            int n;
-            ConsoleKeyInfo end;
-            do
-            {
-                Console.WriteLine("Выберите что хотите найти с помощью Монте-Карло: ");
-                Console.WriteLine("1. Вычисление значения числа Pi.");
-                Console.WriteLine("2. Вычисление значения S фигуры на графике");
-				Console.WriteLine("3. Вычисление S задачи 1");
-				Console.WriteLine("4. Вычисление S задачи 2");
-				Console.WriteLine("5. Вычисление S задачи 3");
-				Console.WriteLine("6. Вычисление S задачи 4");
-				Console.WriteLine("7. Вычисление S задачи 5");
-				Console.WriteLine("8. Вычисление S задачи 6");
-				n = Convert.ToInt32(Console.ReadLine());
-                switch (n)
-                {
-                    case 1: monteCarlo.GetMonteCarloPi(); break;
-                    case 2: monteCarlo.GetMonteCarloS(); break;
-					case 3: monteCarlo.GetMonteCarloS1(); break;
-					case 4: monteCarlo.GetMonteCarloS2(); break;
-					case 5: monteCarlo.GetMonteCarloS3(); break;
-					case 6: monteCarlo.GetMonteCarloS4(); break;
-					case 7: monteCarlo.GetMonteCarloS5(); break;
-					case 8: monteCarlo.GetMonteCarloS6(); break;
-					default: Console.WriteLine("Такого нет"); break;
-                }
-                Console.WriteLine("\nНажмите Esc для выхода в меню");
-                end = Console.ReadKey();
-            } while (end.Key != ConsoleKey.Escape);
-        }
-        static void СallAllocatingInvestments()
+			string path = @"files/preufer.txt";
+			List<int[]> listFromFile = ReadFiles(path);
+			PreuferCode preuferCode = new PreuferCode();
+			preuferCode.GetPreuferCode(listFromFile);
+			Console.WriteLine("Результат записан в файл preuferCodeAnswer.txt");
+		}
+		static void СallTreePreufer()
 		{
-            string path = @"files/taskOfAllocatingInvestments.txt";
-            Dictionary<int, List<int>> profitMatrix = ReadFilesDictionary(path);
+			string path = @"files/codePreuferInTree.txt";
+			List<int> listFromFile = ReadFilesList(path);
+			PreuferCode preuferCode = new PreuferCode();
+			preuferCode.GetTreePreufer(listFromFile);
+			Console.WriteLine("Результат записан в файл treePreuferAnswer.txt");
+		}
+		static void СallMonteCarlo()
+		{
+			MonteCarlo monteCarlo = new MonteCarlo();
+			Console.WriteLine($"Pi = {monteCarlo.GetMonteCarloPi()}");
+			Console.WriteLine($"Точное pi = {Math.PI}");
+			Console.WriteLine($"Пример задачи: S = {monteCarlo.GetMonteCarloS()}");
+			Console.WriteLine($"1 задача: S = {monteCarlo.GetMonteCarloS1()}");
+			Console.WriteLine($"2 задача: S = {monteCarlo.GetMonteCarloS2()}");
+			Console.WriteLine($"3 задача: S = {monteCarlo.GetMonteCarloS3()}");
+			Console.WriteLine($"4 задача: S = {monteCarlo.GetMonteCarloS4()}");
+			Console.WriteLine($"5 задача: S = {monteCarlo.GetMonteCarloS5()}");
+			Console.WriteLine($"6 задача: S = {monteCarlo.GetMonteCarloS6()}");
+		}
+		static void СallAllocatingInvestments()
+		{
+			string path = @"files/taskOfAllocatingInvestments.txt";
+			Dictionary<int, List<int>> profitMatrix = ReadFilesDictionary(path);
 			TaskOfAllocatingInvestments TAI = new TaskOfAllocatingInvestments();
-            TAI.AllocatingInvestments(profitMatrix);
-        }
+			TAI.AllocatingInvestments(profitMatrix);
+		}
 
-        /// <summary>
-        /// Считывает данные из файла
-        /// </summary>
-        /// <param name="path"></param>
-        static private List<int[]> ReadFiles(string path)
-        {
+		/// <summary>
+		/// Считывает данные из файла
+		/// </summary>
+		/// <param name="path"></param>
+		static private List<int[]> ReadFiles(string path)
+		{
 			List<int[]> listOneLine = new List<int[]>();
-            try
-            {
-                using (StreamReader reader = new StreamReader(path))
-                {
-                    string? line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
+			try
+			{
+				using (StreamReader reader = new StreamReader(path))
+				{
+					string? line;
+					while ((line = reader.ReadLine()) != null)
+					{
 						listOneLine.Add(line.Split().Select(int.Parse).ToArray());
-                    }
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Отсутствует необходимый файл");
-            }
-            return listOneLine;
-        }
+					}
+				}
+			}
+			catch
+			{
+				Console.WriteLine("Отсутствует необходимый файл");
+			}
+			return listOneLine;
+		}
 
-        /// <summary>
-        /// Считывает данные из файла
-        /// </summary>
-        /// <param name="path"></param>
-        static private List<int> ReadFilesList(string path)
-        {
-            List<int> listOneLine = new List<int>();
-            try
-            {
-                using (StreamReader reader = new StreamReader(path))
-                {
-                    string? line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        listOneLine = line.Split().Select(int.Parse).ToList();
-                    }
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Отсутствует необходимый файл");
-            }
-            return listOneLine;
-        }
+		/// <summary>
+		/// Считывает данные из файла
+		/// </summary>
+		/// <param name="path"></param>
+		static private List<int> ReadFilesList(string path)
+		{
+			List<int> listOneLine = new List<int>();
+			try
+			{
+				using (StreamReader reader = new StreamReader(path))
+				{
+					string? line;
+					while ((line = reader.ReadLine()) != null)
+					{
+						listOneLine = line.Split().Select(int.Parse).ToList();
+					}
+				}
+			}
+			catch
+			{
+				Console.WriteLine("Отсутствует необходимый файл");
+			}
+			return listOneLine;
+		}
 
-        /// <summary>
-        /// Считывает данные из файла в словарь
-        /// </summary>
-        /// <param name="path"></param>
-        static private Dictionary<int, List<int>> ReadFilesDictionary(string path)
-        {
-            Dictionary<int, List<int>> profitMatrix = new Dictionary<int, List<int>>();
-            List<int> listOneLine = new List<int>();
-            try
-            {
-                using (StreamReader reader = new StreamReader(path))
-                {
-                    string? line;
+		/// <summary>
+		/// Считывает данные из файла в словарь
+		/// </summary>
+		/// <param name="path"></param>
+		static private Dictionary<int, List<int>> ReadFilesDictionary(string path)
+		{
+			Dictionary<int, List<int>> profitMatrix = new Dictionary<int, List<int>>();
+			List<int> listOneLine = new List<int>();
+			try
+			{
+				using (StreamReader reader = new StreamReader(path))
+				{
+					string? line;
 					reader.ReadLine();
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        listOneLine = line.Split().Select(int.Parse).ToList();
+					while ((line = reader.ReadLine()) != null)
+					{
+						listOneLine = line.Split().Select(int.Parse).ToList();
 						int key = listOneLine[0];
-                        listOneLine.RemoveAt(0);
+						listOneLine.RemoveAt(0);
 						profitMatrix.Add(key, listOneLine);
-                    }
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Отсутствует необходимый файл");
-            }
-            return profitMatrix;
-        }
-    }
+					}
+				}
+			}
+			catch
+			{
+				Console.WriteLine("Отсутствует необходимый файл");
+			}
+			return profitMatrix;
+		}
+	}
 }

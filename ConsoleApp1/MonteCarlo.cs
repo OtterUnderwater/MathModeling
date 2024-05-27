@@ -11,7 +11,7 @@ namespace ConsoleApp1
     {
         private readonly Random random = new Random();
         private readonly int _countGrains = 1000000; //количество итераций цикла
-        public void GetMonteCarloPi()
+        public double GetMonteCarloPi()
         {
             double side = 2;
             double S0 = Math.Pow(side, 2);
@@ -26,10 +26,9 @@ namespace ConsoleApp1
                 }
             }
             double S = S0 * countHits / _countGrains;
-            Console.WriteLine($"Результат pi = {S}");
-            Console.WriteLine($"Точное pi = {Math.PI}");
+            return S;
         }
-        public void GetMonteCarloS()
+        public double GetMonteCarloS()
         {
             //ширина и высота базового прямоугольника
             double width = 8.5;  //ширина прямоугольника (a)
@@ -45,9 +44,9 @@ namespace ConsoleApp1
                 }
             }
             double S = width * height * countHits / _countGrains;
-            Console.WriteLine($"Результат S = {S}");
+            return S;
         }
-        public void GetMonteCarloS1()
+        public double GetMonteCarloS1()
         {
             double width = 20; //ширина
             double height = 1; //высота
@@ -63,9 +62,9 @@ namespace ConsoleApp1
                 }
             }
             double S = width * height * countHits / _countGrains;
-            Console.WriteLine($"Результат S = {S}");
-        }
-		public void GetMonteCarloS2()
+			return S;
+		}
+		public double GetMonteCarloS2()
 		{
 			double width = 7;
 			double height = 8;
@@ -80,9 +79,9 @@ namespace ConsoleApp1
 				}
 			}
 			double S = width * height * countHits / _countGrains;
-			Console.WriteLine($"Результат S = {S}");
+			return S;
 		}
-		public void GetMonteCarloS3()
+		public double GetMonteCarloS3()
 		{
 			double width = 12;
 			double height = 6;
@@ -97,9 +96,9 @@ namespace ConsoleApp1
 				}
 			}
 			double S = width * height * countHits / _countGrains;
-			Console.WriteLine($"Результат S = {S}");
+			return S;
 		}
-		public void GetMonteCarloS4()
+		public double GetMonteCarloS4()
 		{
 			double width = 10;
 			double height = 4;
@@ -114,9 +113,9 @@ namespace ConsoleApp1
 				}
 			}
 			double S = width * height * countHits / _countGrains;
-			Console.WriteLine($"Результат S = {S}");
+			return S;
 		}
-		public void GetMonteCarloS5()
+		public double GetMonteCarloS5()
 		{
 			double width = 7;
 			double height = 4;
@@ -131,9 +130,9 @@ namespace ConsoleApp1
 				}
 			}
 			double S = width * height * countHits / _countGrains;
-			Console.WriteLine($"Результат S = {S}");
+			return S;
 		}
-		public void GetMonteCarloS6()
+		public double GetMonteCarloS6()
 		{
 			double width = 2;
 			double height = 1;
@@ -148,7 +147,7 @@ namespace ConsoleApp1
 				}
 			}
 			double S = width * height * countHits / _countGrains;
-			Console.WriteLine($"Результат S = {S}");
+			return S;
 		}
     }
 }
