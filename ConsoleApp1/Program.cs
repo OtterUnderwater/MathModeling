@@ -245,7 +245,7 @@ namespace ConsoleApp1
 			List<int> listFromFile = ReadFilesList(path);
 			PreuferCode preuferCode = new PreuferCode();
 			preuferCode.GetTreePreufer(listFromFile);
-			Console.WriteLine("Результат записан в файл treePreuferAnswer.txt");
+			Console.WriteLine("Результат записан в файл codePreuferInTreeAnswer.txt");
 		}
 		static void СallMonteCarlo()
 		{
@@ -263,7 +263,7 @@ namespace ConsoleApp1
 		static void СallAllocatingInvestments()
 		{
 			string path = @"files/taskOfAllocatingInvestments.txt";
-			Dictionary<int, List<int>> profitMatrix = ReadFilesDictionary(path);
+            List<List<int>> profitMatrix = ReadFilesListList(path);
 			TaskOfAllocatingInvestments TAI = new TaskOfAllocatingInvestments();
 			TAI.AllocatingInvestments(profitMatrix);
 		}
@@ -319,12 +319,12 @@ namespace ConsoleApp1
 		}
 
 		/// <summary>
-		/// Считывает данные из файла в словарь
+		/// Считывает данные из файла в лист листов
 		/// </summary>
 		/// <param name="path"></param>
-		static private Dictionary<int, List<int>> ReadFilesDictionary(string path)
+		static private List<List<int>> ReadFilesListList(string path)
 		{
-			Dictionary<int, List<int>> profitMatrix = new Dictionary<int, List<int>>();
+            List<List<int>> profitMatrix = new List<List<int>>();
 			List<int> listOneLine = new List<int>();
 			try
 			{
@@ -335,9 +335,7 @@ namespace ConsoleApp1
 					while ((line = reader.ReadLine()) != null)
 					{
 						listOneLine = line.Split().Select(int.Parse).ToList();
-						int key = listOneLine[0];
-						listOneLine.RemoveAt(0);
-						profitMatrix.Add(key, listOneLine);
+						profitMatrix.Add(listOneLine);
 					}
 				}
 			}

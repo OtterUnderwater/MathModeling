@@ -148,6 +148,6 @@ namespace ConsoleApp1
 			}
 			double S = width * height * countHits / _countGrains;
 			return S;
-		}
-    }
+		}    
+	}
 }
